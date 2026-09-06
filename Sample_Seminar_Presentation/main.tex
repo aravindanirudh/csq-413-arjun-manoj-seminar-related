@@ -1,0 +1,331 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\title[Spiking Neural Networks]{\textbf{SPIKING NEURAL NETWORKS FOR MULTIMODAL NEUROIMAGING}}
+\subtitle{An Analysis of Current Trends and the NeuCube Brain-Inspired Architecture}
+\author{
+\textbf{Submitted By:} \\ SUHAIL K B (CEC22CS123) \\[0.2cm]
+\textbf{Guide Name:} \\ Mrs. ANSILA A S \\ Assistant Professor
+}
+\institute{
+Department of Computer Engineering \\ College of Engineering, Cherthala}
+\date{October 21, 2025}
+
+\begin{document}
+
+%-------------------- TITLE SLIDE --------------------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%-------------------- INTRODUCTION --------------------
+\begin{frame}{Introduction}
+\begin{itemize}
+  \item AI has revolutionized neuroimaging for disease detection and multimodal data integration.
+  \item ANNs face challenges with temporal dynamics and computational cost.
+  \item SNNs mimic biological neurons using discrete spikes.
+  \item NeuCube is a specialized SNN framework for spatiotemporal brain data.
+\end{itemize}
+\end{frame}
+
+%-------------------- LITERATURE SURVEY --------------------
+\begin{frame}{Literature Survey}
+\begin{enumerate}
+  \item \textbf{Improving NeuCube (2023):} Enhanced EEG pattern recognition via transfer learning.
+  \item \textbf{ANN-SNN Conversion (2023):} Retains ANN accuracy with SNN efficiency.
+  \item \textbf{BackEISNN (2022):} Balanced excitatory-inhibitory neurons for adaptive learning.
+  \item \textbf{SpikingJelly (2023):} Python-based framework for spike-based intelligence.
+\end{enumerate}
+\end{frame}
+
+%-------------------- FUNDAMENTALS --------------------
+\begin{frame}{Fundamentals of SNNs and Neuromorphic Computing}
+\textbf{Neuromorphic Computing:}Brain-inspired computing: High energy efficiency via parallel, event-driven processing.\\
+\medskip
+\textbf{Spiking Neural Networks (SNNs):} Use discrete, neuron-like spikes to process dynamic, time-varying data.\\
+\medskip
+\textbf{Key Concepts:}
+\begin{itemize}
+    \item \textbf{Spikes:} 
+    \item \textbf{Membrane Potential:} 
+    \item \textbf{Temporal Coding:} 
+    \item \textbf{Synaptic Plasticity:} 
+    \item \textbf{Refractory Period:} 
+
+\end{itemize}
+\end{frame}
+%-------------------- SNN vs ANN --------------------
+\begin{frame}{SNN Neuron Models}
+    \begin{itemize}
+        \item \textbf{Leaky Integrate-and-Fire (LIF):}
+            \begin{itemize}
+                \item \textbf{Integrate:} Input spikes increase membrane potential.
+                \medskip
+                \item \textbf{Leak:} Adds biological realism; potential decays over time. 
+                \medskip
+                \item \textbf{Fire:} Emits a spike when potential reaches threshold.
+                \medskip
+                \item \textbf{Reset:} Potential resets after firing.
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+%-------------------- NEUCUBE --------------------
+\begin{frame}{SNN Neuron Models}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\linewidth]{fig3.jpg} % replace with your image filename
+\end{figure}
+\end{frame}
+
+
+%-------------------- SNN vs ANN --------------------
+\begin{frame}{SNN Neuron Models}
+    \begin{itemize}
+        \item \textbf{Integrate-and-Fire (IF):} The simplest model that integrates incoming current.
+        \medskip
+        \item \textbf{Izhikevich:} Balances biological accuracy with computational efficiency.
+        \medskip
+        \item \textbf{Hodgkin-Huxley:} The most detailed and accurate model, but computationally heavy.
+        \medskip
+        \item \textbf{AdEx:} An advanced model that mimics neuron fatigue.
+    \end{itemize}
+\end{frame}
+    
+
+
+%-------------------- SNN vs ANN --------------------
+\begin{frame}{SNN Learning Models}
+    \begin{itemize}
+        \item \textbf{Unsupervised :} based on the relative timing of pre- and post-synaptic spikes.
+        \medskip
+        \begin{enumerate}
+            \item \textbf{Spike-Timing Dependent Plasticity (STDP)}\\
+            If a presynaptic neuron fires \textbf{before} a postsynaptic neuron → \textbf{strengthen} the synapse (Long-Term Potentiation).\\
+            \medskip
+            If it fires \textbf{after} → \textbf{weaken} the synapse (Long-Term Depression).\\
+        \medskip
+            \item \textbf{Hebbian Learning}
+
+            “Neurons that fire together, wire together.”\\
+        \end{enumerate}
+
+    \end{itemize}
+\end{frame}
+
+%-------------------- SNN vs ANN --------------------
+\begin{frame}{SNN Learning Models}
+    \begin{itemize}
+        \item \textbf{Supervised Learning using Surrogate Gradients}        \begin{itemize}
+            \item Surrogate derivatives are used to approximate gradients.
+            \item Enables backpropagation-like training for SNNs.
+            \item Trained on labeled datasets like ANNs.
+        \end{itemize}
+        \bigskip
+        \item \textbf{Reinforcement (R-STDP):} 
+        \begin{itemize}
+            \item Synaptic weights based on reward signals.
+            \item Combines spike activity with feedback from the environment.
+            \item Useful for robotics or neuromorphic control tasks.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+%-------------------- SNN vs ANN --------------------
+\begin{frame}{Spike Encoding}
+    SNNs encode information in spikes, mainly in two ways:
+    \begin{itemize}
+        \item \textbf{Rate coding:} Number of spikes in a time window.\\
+        Example: More spikes → higher intensity.
+        \medskip
+        \item \textbf{Temporal coding:} Exact timing of spikes.\\
+        Example: The first neuron to fire represents the strongest input.
+    \end{itemize}
+
+\end{frame}
+
+%-------------------- SNN vs ANN --------------------
+\begin{frame}{Spike Encoding}
+\begin{figure}[h]
+\centering
+  \includegraphics[width=0.8\linewidth]{fig4.jpg} % replace with your image filename
+\end{figure}
+\begin{itemize}
+    \item Integrate incoming spikes → accumulate membrane potential.
+    \item Fire when threshold is reached → send spikes.
+    \item Learning adjusts weights based on spike timing or approximated gradients
+\end{itemize}
+\end{frame}
+
+%-------------------- SNN vs ANN --------------------
+\begin{frame}{SNNs vs ANNs}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1\linewidth]{image.png} % replace with your image filename
+\end{figure}
+\end{frame}
+
+%-------------------- APPLICATIONS --------------------
+\begin{frame}{Applications in Neuroimaging}
+\begin{itemize}
+    \item \textbf{Structural Neuroimaging (MRI):} 
+    \medskip
+    \item \textbf{Functional Neuroimaging (EEG/fMRI):} 
+    \textbf{Applications:} Brain-Computer Interfaces (BCIs), disease diagnosis (e.g., Alzheimer's, epilepsy), and classifying cognitive states.
+    \medskip
+    \item \textbf{Multimodal Data Integration:}  
+\end{itemize}
+\end{frame}
+
+%-------------------- DEVELOPMENT ECOSYSTEM --------------------
+\begin{frame}{SNN Development Ecosystem}
+\par \textbf{Development Challenges:} Adoption is hindered by a lack of pre-built models, specialized software, and standardized formats.
+
+\textbf{Software Simulators:}
+\begin{itemize}
+  \item snnTorch
+  \item SpikingJelly
+  \item Nengo DL
+  \item NeuCube
+\end{itemize}
+
+\end{frame}
+
+%-------------------- NEUCUBE --------------------
+\begin{frame}{Industry Hardwares}
+\textbf{Hardware Platforms:}
+\begin{itemize}
+  \item \textbf{Intel Loihi2 :}A research chip with programmable neuron models and on-chip learning. 1.15 billion neuron system based on this architecture;95\% accuracy in gesture recognition with 200x lower power than a GPU.
+   \medskip
+  \item \textbf{IBM NorthPole:} A chip focused on high-performance, energy-efficient model inference, rather than SNN development.
+  \medskip
+  \item \textbf{BrainChip Akida: } Paired with a CPU for hybrid execution.includes a CNN-to-SNN conversion tool. The platform has shown 98\% accuracy recognizing fast-moving objects on edge devices.
+  \medskip
+  \item \textbf{Lynxi KA200: } A high-performance AI accelerator designed for edge computing and autonomous driving.
+\end{itemize}
+\end{frame}
+
+
+%-------------------- NEUCUBE --------------------
+\begin{frame}{NeuCube: Architecture \& Implementation}
+\begin{itemize}
+  \item Brain-inspired 3D structure for spatiotemporal mapping.
+  \item Integrates multimodal data.
+  \item Supports hybrid learning (unsupervised + supervised).
+\end{itemize}
+\textbf{Architectural Components:}
+\begin{itemize}
+    \item \textbf{Input Data Stream:} 
+    \item \textbf{Gene Regulatory Network (GRN):}
+    \item \textbf{Neurogenetic Cube:} 
+    \item \textbf{Output Module:} 
+\end{itemize}
+\end{frame}
+
+%-------------------- NEUCUBE --------------------
+\begin{frame}{The NeuCube Framework}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1\linewidth]{fig2.jpg} % replace with your image filename
+\end{figure}
+\end{frame}
+
+\begin{frame}{The NeuCube Framework}
+
+\textbf{Implementation \& Flexibility:}
+\begin{itemize}
+    \item NeuCube supports flexible implementation on conventional computers, GPUs, and neuromorphic hardware (e.g., Loihi and SpiNNaker).
+    \bigskip
+    \item Integrates diverse data, adapt its structure, and incorporate GRNs makes it a versatile hybrid platform.
+\end{itemize}
+\end{frame}
+
+
+
+%-------------------- CASE STUDIES --------------------
+\begin{frame}{Case Study 1: MRI Classification}
+\begin{itemize}
+  \item Compared SNN (SpikingJelly) and CNN (AlexNet) for Alzheimer’s detection.
+  \item CNN: 85.9\% accuracy vs SNN: 78\% (faster but less precise).
+  \item SNNs less effective for static MRI data.
+\end{itemize}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\linewidth]{fig 1.jpg} % replace with your image filename
+  \caption{Accuracy comparison of CNN and SNN on MRI data}
+\end{figure}
+
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{Case Study 2: EEG and fMRI Analysis}
+\begin{itemize}
+  \item NeuCube achieved 97\% accuracy in EEG-based disease detection.
+  \item fMRI: 90\% accuracy in cognitive state classification.
+  \item Outperformed traditional ML models for temporal data.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Case Study 3: Longitudinal MRI Data}
+\begin{itemize}
+  \item NeuCube trained on 6-year MRI dataset for dementia prediction.
+  \item Predicted disease 2 years in advance with 91\% accuracy.
+  \item Demonstrates potential for long-term predictive neuroimaging.
+\end{itemize}
+\end{frame}
+
+%-------------------- HYBRID SYSTEMS --------------------
+\begin{frame}{Hybrid Systems: Integrating ANNs and SNNs}
+\begin{itemize}
+  \item Combines CNN’s spatial analysis with SNN’s temporal efficiency.
+  \item Used in neuroprosthetics and adaptive neuro-fuzzy systems.
+  \item Enhances brain-computer interface performance.
+\end{itemize}
+\end{frame}
+
+%-------------------- CHALLENGES --------------------
+\begin{frame}{Challenges and Future Outlook}
+\begin{itemize}
+  \item Lack of standardization and benchmarking.
+  \item Sensitive to noise in EEG data.
+  \item Difficult training due to non-differentiable spikes.
+  \item Ethical issues: privacy, bias, and clinical safety.
+  \item \textbf{Future:} predictive modeling, personalized medicine, and BCIs.\\
+  \medskip
+  Research will focus on predictive modeling for early diagnosis, personalized medicine, and advanced Brain-Computer Interfaces.
+
+\end{itemize}
+\end{frame}
+
+%-------------------- CONCLUSION --------------------
+\begin{frame}{Conclusion}
+\begin{itemize}
+  \item SNNs outperform ANNs in temporal neuroimaging tasks like EEG/fMRI.
+  \item NeuCube demonstrates strong multimodal integration and adaptability.
+  \item Hybrid ANN-SNN models show real-world potential.
+  \item Standardization and clinical validation are key future steps.
+\end{itemize}
+\end{frame}
+
+%-------------------- REFERENCES --------------------
+\begin{frame}{References}
+\scriptsize
+\begin{thebibliography}{6}
+\bibitem[1]{kasabov2014} N. K. Kasabov, ``NeuCube: A spiking neural network architecture for mapping and learning spatio-temporal brain data,'' \textit{Neural Networks}, 2014.
+\bibitem[2]{kasabov2015} N. Kasabov \& E. Capecci, ``Spiking neural network methodology for EEG data modelling,'' \textit{Information Sciences}, 2015.
+\bibitem[3]{doborjeh2021} M. Doborjeh et al., ``Personalised Predictive Modelling with SNNs of MRI Data,'' \textit{Neural Networks}, 2021.
+\bibitem[4]{nunes2022} J. Nunes et al., ``Spiking Neural Networks: A Survey,'' \textit{IEEE Access}, 2022.
+\bibitem[5]{wu2023} X. Wu et al., ``Improving NeuCube for EEG Pattern Recognition,'' \textit{Neurocomputing}, 2023.
+\bibitem[6]{pfeiffer2018} M. Pfeiffer \& T. Pfeil, ``Deep Learning with Spiking Neurons: Opportunities and Challenges,'' \textit{Frontiers in Neuroscience}, 2018.
+\end{thebibliography}
+\end{frame}
+
+\end{document}
