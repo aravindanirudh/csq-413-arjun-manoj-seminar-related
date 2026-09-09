@@ -10,11 +10,11 @@
 \usepackage{tabularx}
 
 % Metadata
-\title[Cracked Egg Detection via Improved YOLOv8]{\textbf{REAL-TIME DETECTION METHOD FOR CRACKED EGGS BASED ON IMPROVED YOLOV8 AND DUAL VERIFICATION WITH TRIPLE CLASSIFICATION GRANULARITY}}
+\title[Cracked Egg Detection via Improved YOLOv8]{\large \textbf{REAL-TIME DETECTION METHOD FOR CRACKED EGGS BASED ON IMPROVED YOLOV8 AND DUAL VERIFICATION WITH TRIPLE CLASSIFICATION GRANULARITY}}
 \subtitle{CSQ413 Seminar Presentation}
 
 \author{
-\textbf{Submitted by:} \\ Arjun Manoj (CEC23CS043) \\[0.25cm]
+\textbf{Submitted by:} \\ ARJUN MANOJ (CEC23CS043) \\[0.25cm]
 \textbf{Under the Guidance of:} \\ Mrs. NANDANA RAJ R \\ Assistant Professor
 }
 
@@ -22,16 +22,16 @@
 Department of Computer Science and Engineering \\ College of Engineering, Cherthala
 }
 
-\date{\today}
+\date{}
 
 \begin{document}
 
-% ==================== TITLE SLIDE ====================
+% ==================== SLIDE 1: TITLE SLIDE ====================
 \begin{frame}
   \titlepage
 \end{frame}
 
-% ==================== OUTLINE SLIDE ====================
+% ==================== SLIDE 2: OUTLINE ====================
 \begin{frame}{Outline}
 \tableofcontents
 \end{frame}
@@ -41,309 +41,300 @@ Department of Computer Science and Engineering \\ College of Engineering, Cherth
 %=====================================================
 
 % ==================== SLIDE 3: INTRODUCTION ====================
-\begin{frame}{Introduction: Background and Motivation}
+\begin{frame}{Introduction}
 \begin{itemize}
-    \item Egg shell integrity is a critical quality indicator in the automated poultry industry.
+    \item \textbf{Commercial Significance:} Eggshell integrity is a vital quality indicator in the poultry industry.
     \medskip
-    \item Approximately 3\% of eggs suffer shell damage during production, handling and transit.
+    \item \textbf{High Breakage Rate:} Around 3\% of eggs suffer shell damage during production, packing and transit.
     \medskip
-    \item Damaged shells cause bacterial infiltration, accelerate spoilage, lead to yolk leakage and produce heavy economic losses.
+    \item \textbf{Financial and Health Risks:} Cracks cause bacterial invasion, rapid spoilage, yolk leakage and financial losses.
     \medskip
-    \item Commercial egg inspection in China still primarily relies on manual visual examination:
-    \begin{itemize}
-        \item High labor intensity and high operating costs.
-        \item Low inspection efficiency and strong subjectivity.
-        \item Rapid worker fatigue causes elevated error rates and missed detections.
-    \end{itemize}
+    \item \textbf{Current Industry Reliance:} Still primarily rely on manual visual inspection.
+    \medskip
+    \item \textbf{Manual Bottlenecks:} Labor-intensive, low efficiency and prone to missed defects from worker fatigue.
 \end{itemize}
 \end{frame}
 
 % ==================== SLIDE 4: LIMITATIONS OF EXISTING METHODS ====================
 \begin{frame}{Limitations of Existing Methods}
 \begin{itemize}
-    \item \textbf{Acoustic Resonance Techniques:}
+    \item \textbf{Acoustic Resonance Methods:}
     \begin{itemize}
-        \item Analyze resonance frequencies from mechanical tapping response.
-        \item Highly sensitive to loud noise in factory environments. High hardware cost.
+        \item Analyzes acoustic response from mechanical tapping.
+        \item Vulnerable to severe ambient noise on factory floors; high equipment cost.
     \end{itemize}
     \medskip
-    \item \textbf{Traditional Computer Vision Approaches:}
+    \item \textbf{Traditional Computer Vision:}
     \begin{itemize}
-        \item Depend on hand-crafted visual features (Otsu thresholding, morphological operations).
-        \item Slow processing speed, weak adaptability and sensitivity to lighting variations.
+        \item Employs manual feature extraction (Otsu thresholding, morphological filters).
+        \item Slow processing speed; fragile under fluctuating factory illumination.
     \end{itemize}
     \medskip
-    \item \textbf{Existing Deep Learning Models:}
+    \item \textbf{Existing Deep Learning Approaches:}
     \begin{itemize}
-        \item High network complexity and serial processing limit frame rates below production demands ($\ge$ 30 FPS).
-        \item Primarily evaluated on static, pre-washed egg images.
-        \item Lack rotational conveyor mechanisms, leaving blind spots on the bottom of eggs.
+        \item High computational complexity; inference speeds struggle to sustain $\ge 30$ FPS.
+        \item Evaluated primarily on static, pre-washed egg images.
+        \item Absence of egg rotation creates uninspected blind spots on the bottom shell.
     \end{itemize}
 \end{itemize}
 \end{frame}
 
 % ==================== SLIDE 5: RESEARCH OBJECTIVES ====================
 \begin{frame}{Research Objectives and Key Contributions}
-\textbf{Research Objective:} Establish an industrial-grade, real-time online detection method for unwashed cracked eggs on dynamic conveyor lines.
+\textbf{Primary Objective:} Develop an industrial-grade, real-time online detection method for unwashed cracked eggs on dynamic production lines.
 
 \bigskip
 \textbf{Core Contributions of the Study:}
-\begin{enumerate}
-    \item \textbf{Triple Granularity and Dual Discrimination:}
-    Formulated a fine-grained category scheme (intact egg, cracked egg, crack region) and a dual verification rule to prevent missed detections.
+\begin{itemize}
+    \item \textbf{Triple Granularity and Dual Verification:} Classifies intact eggs, cracked eggs and crack regions with a joint decision rule to eliminate missed defects.
     \medskip
-    \item \textbf{Structural Optimization of YOLOv8:}
-    Integrated DCNv2, BiFPN, WIoUv2 loss function and an extra small object detection head to capture minute, irregular cracks.
+    \item \textbf{Structural YOLOv8 Optimization:} Embeds DCNv2, BiFPN, WIoUv2 loss and an extra small object head to capture subtle hairline cracks.
     \medskip
-    \item \textbf{Industrial Deployment and Validation:}
-    Implemented end-to-end online inference on a Kyowa/FP-600 egg conveyor line, achieving 45 FPS and meeting industrial reliability standards.
-\end{enumerate}
+    \item \textbf{Live Industrial Deployment:} Deployed on a Kyowa/FP-600 egg conveyor with rotating rollers, achieving 45 FPS and meeting industrial reliability standards.
+\end{itemize}
 \end{frame}
 
 %=====================================================
 \section{Literature Survey}
 %=====================================================
 
-% ==================== SLIDE 6: LITERATURE SURVEY ====================
-\begin{frame}{Literature Survey}
-\begin{itemize}
-    \item \textbf{Traditional and Two-Stage Methods:}
-    \begin{itemize}
-        \item \textbf{Liang et al. (2020):} Otsu threshold segmentation achieved 98.18\% accuracy, but relied on manual feature extraction and static conditions.
-        \item \textbf{Datta et al. (2019):} Faster R-CNN achieved 75\% mAP for severe cracks; heavy two-stage computation was too slow for production lines.
-        \item \textbf{Turkoglu (2021):} Hybrid CNN-BiLSTM achieved 96.3\% accuracy, but incurred high computational complexity.
-        \item \textbf{Botta et al. (2022):} Deep CNN reached 95.38\% accuracy on static egg images.
-    \end{itemize}
-    \medskip
-    \item \textbf{YOLO Adaptations and Real-Time Systems:}
-    \begin{itemize}
-        \item \textbf{Yin et al. (2024):} YOLOv5 with Ghost and ECA modules for duck eggs (93.8\% accuracy).
-        \item \textbf{Huang et al. (2023):} YOLOv5 with BiFPN and GSConv on unwashed eggs (96.4\% accuracy).
-    \end{itemize}
-    \medskip
-    \item \textbf{Critical Research Gaps Addressed by Base Paper:}
-    \begin{itemize}
-        \item Non-rotating conveyors fail to inspect bottom cracks.
-        \item Binary classification (intact vs cracked) misses subtle micro-cracks under dynamic motion.
-    \end{itemize}
-\end{itemize}
+% ==================== SLIDE 6: LITERATURE SURVEY PART 1 ====================
+\begin{frame}[t]{Literature Survey: Traditional and Two-Stage Methods}
+\vspace{-0.2cm}
+\begin{table}[t]
+\centering
+\caption{\scriptsize Literature survey of traditional image processing and two-stage deep learning methods}
+\vspace{-0.3cm}
+\setlength{\arrayrulewidth}{0.8pt}
+\renewcommand{\arraystretch}{1.25}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{>{\centering\arraybackslash}p{3.2cm} >{\centering\arraybackslash}p{2.8cm} >{\centering\arraybackslash}p{2.2cm} >{\centering\arraybackslash}p{2.0cm} >{\centering\arraybackslash}p{3.6cm}}
+\hline
+\textbf{Paper, Author, Year} & \textbf{Methodology} & \textbf{Dataset} & \textbf{Result} & \textbf{Limitations} \\
+\hline
+Integrated egg quality system \newline \textit{Liang et al. (2020)} & Histogram thresholding + Otsu segmentation & Static egg images (lab setup) & 98.18\% accuracy & Manual feature extraction; sensitive to lighting; static only. \\
+\hline
+Damage detection on eggshells \newline \textit{Datta et al. (2019)} & Faster R-CNN (two-stage detector) & Chicken eggshells (static) & 75\% mAP (severe cracks) & High computational complexity; inference too slow for real-time lines. \\
+\hline
+Defective egg detection via CNN-BiLSTM \newline \textit{Turkoglu (2021)} & Hybrid CNN-BiLSTM deep network & Egg surface defect dataset & 96.3\% accuracy & Heavy network architecture; serial processing limits line throughput. \\
+\hline
+\end{tabular}
+}
+\end{table}
+\end{frame}
+
+% ==================== SLIDE 7: LITERATURE SURVEY PART 2 ====================
+\begin{frame}[t]{Literature Survey: Deep Learning and YOLO Adaptations}
+\vspace{-0.2cm}
+\begin{table}[t]
+\centering
+\caption{\scriptsize Literature survey of convolutional and YOLO-based egg crack inspection methods}
+\vspace{-0.3cm}
+\setlength{\arrayrulewidth}{0.8pt}
+\renewcommand{\arraystretch}{1.25}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{>{\centering\arraybackslash}p{3.2cm} >{\centering\arraybackslash}p{2.8cm} >{\centering\arraybackslash}p{2.2cm} >{\centering\arraybackslash}p{2.0cm} >{\centering\arraybackslash}p{3.6cm}}
+\hline
+\textbf{Paper, Author, Year} & \textbf{Methodology} & \textbf{Dataset} & \textbf{Result} & \textbf{Limitations} \\
+\hline
+Eggshell crack detection \newline \textit{Botta et al. (2022)} & Deep Convolutional Neural Networks & Static chicken egg images & 95.38\% accuracy & Optimized only for static scenes; misses bottom cracks due to lack of rotation. \\
+\hline
+Lightweight duck egg crack detection \newline \textit{Yin et al. (2024)} & YOLOv5 + Ghost modules + ECA attention & Cracked duck egg dataset & 93.8\% accuracy & Tested only on duck eggs; binary labeling misses subtle hairline cracks. \\
+\hline
+Damage detection of unwashed eggs \newline \textit{Huang et al. (2023)} & YOLOv5 + BiFPN + GSConv + CA attention & Dynamic video of unwashed eggs & 96.4\% accuracy & Lacks dual verification of localized crack regions; bottom cracks uninspected. \\
+\hline
+\end{tabular}
+}
+\end{table}
 \end{frame}
 
 %=====================================================
 \section{System Hardware and Data Acquisition}
 %=====================================================
 
-% ==================== SLIDE 7: MACHINE VISION AND CONVEYOR ====================
-\begin{frame}{Machine Vision and Conveying System Setup}
-\begin{columns}
-    \begin{column}{0.48\textwidth}
-        % [FIGURE GUIDANCE]:
-        % Place Figure 1 (Egg conveying device) here.
-        % File: figure1_egg_conveying_device.jpg
-        \begin{figure}[h]
-            \centering
-            \includegraphics[width=0.8\linewidth,height=0.5\textheight,keepaspectratio]{figure1_egg_conveying_device.jpg}
-            \caption{Egg conveying device (Source: Figure 1)}
-        \end{figure}
-    \end{column}
-    \begin{column}{0.52\textwidth}
-        % [FIGURE GUIDANCE]:
-        % Place Figure 2 (Proposed machine vision system) here.
-        % File: figure2_machine_vision_system.jpg
-        \begin{figure}[h]
-            \centering
-            \includegraphics[width=\linewidth]{figure2_machine_vision_system.jpg}
-            \caption{Machine vision system layout (Source: Figure 2)}
-        \end{figure}
-    \end{column}
-\end{columns}
-\vspace{-0.2cm}
+% ==================== SLIDE 8: SYSTEM HARDWARE ====================
+\begin{frame}{System Hardware and Conveying Mechanism}
 \begin{itemize}
-    \item \textbf{Compound Motion:} Six parallel channels (360 eggs/min). Driven rollers rotate eggs 360 degrees, presenting bottom surfaces to the camera.
-    \item \textbf{Imaging Rig:} CCD camera plane is parallel to egg motion plane; regulated LED lighting.
+    \item \textbf{Multi-Channel Conveyor:} 6 parallel channels carrying 60 eggs/min each (total throughput: 360 eggs/min).
+    \medskip
+    \item \textbf{Compound Motion (Translation + Rotation):} Motor-driven rollers rotate eggs 360 degrees, presenting all shell surfaces to the camera.
+    \medskip
+    \item \textbf{Parallel Camera Alignment:} CCD camera imaging plane is positioned parallel to egg motion plane to prevent perspective distortion.
+    \medskip
+    \item \textbf{Regulated Lighting:} Integrated LED illumination box ensures uniform brightness across all channels.
 \end{itemize}
 \end{frame}
 
-% ==================== SLIDE 8: DATASET ACQUISITION AND PREPARATION ====================
+% ==================== SLIDE 9: FULL SLIDE FIGURES 1 & 2 ====================
+\begin{frame}{Conveying Device and Vision System Setup}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.48\linewidth,height=0.72\textheight,keepaspectratio]{figure1_egg_conveying_device.jpg}
+    \hfill
+    \includegraphics[width=0.48\linewidth,height=0.72\textheight,keepaspectratio]{figure2_machine_vision_system.jpg}
+    \vspace{-0.2cm}
+    \caption{\scriptsize Left: Egg conveying device with 6 channels (Figure 1). Right: Machine vision system schematic (Figure 2).}
+\end{figure}
+\end{frame}
+
+% ==================== SLIDE 10: DATASET ACQUISITION ====================
 \begin{frame}{Dataset Acquisition and Preparation}
 \begin{itemize}
-    \item \textbf{On-Site Dynamic Image Acquisition:}
-    \begin{itemize}
-        \item Acquired at Guangzhou Suiping Enterprise Co., Ltd.
-        \item Captured unwashed eggs with dust, stains, varying angles and real factory lighting.
-        \item Deliberately collected cracked eggs to balance positive and negative samples.
-        \item Base raw dataset: 628 dynamic images.
-    \end{itemize}
+    \item \textbf{Industrial Collection:} Captured on live conveyor at Guangzhou Suiping Enterprise Co., Ltd.
     \medskip
-    \item \textbf{Dataset Splitting and Data Augmentation:}
-    \begin{itemize}
-        \item Split into Training (377), Validation (126) and Test (125) sets in a 6:2:2 ratio.
-        \item Applied random cropping and horizontal/vertical flipping (50\% probability) to training set.
-        \item Expanded training set to 2,972 images after invalid data removal.
-        \item Final dataset: 3,222 images containing 7,611 intact eggs, 2,711 cracked eggs and 2,935 cracked areas.
-    \end{itemize}
+    \item \textbf{Real-World Conditions:} Tested on unwashed eggs with dust, stains and factory lighting variations.
+    \medskip
+    \item \textbf{Balanced Sampling:} 628 raw dynamic images with deliberate inclusion of cracked eggs.
+    \medskip
+    \item \textbf{Data Augmentation:} Random cropping and flipping (50\% probability) expanded training set to 2,972 images.
+    \medskip
+    \item \textbf{Final Dataset (6:2:2 Split):} 3,222 total images containing 7,611 intact eggs, 2,711 cracked eggs and 2,935 cracked areas.
 \end{itemize}
 \end{frame}
 
-% ==================== SLIDE 9: TRIPLE GRANULARITY ====================
-\begin{frame}{Triple Classification Granularity and Annotation}
+% ==================== SLIDE 11: TRIPLE GRANULARITY ====================
+\begin{frame}{Triple Classification Granularity}
 \begin{itemize}
-    \item \textbf{Limitation of Binary Classification:}
-    \begin{itemize}
-        \item Binary labels ("intact" vs "cracked") force the model to rely only on whole-egg features.
-        \item Small local cracks contribute minor global visual cues, causing high false negatives.
-    \end{itemize}
-    \medskip
-    \item \textbf{Proposed Triple Classification Scheme:}
-    \begin{itemize}
-        \item \textbf{Category 1 (Intact Egg):} Normal undamaged egg body.
-        \item \textbf{Category 2 (Cracked Egg):} Entire egg body displaying cracks.
-        \item \textbf{Category 3 (Crack Region):} Specific localized damaged fracture zone.
-    \end{itemize}
-    \medskip
-    \item \textbf{Annotation Protocol:}
-    \begin{itemize}
-        \item Annotated using LabelImg with labels "1", "2" and "3".
-        \item XML annotations converted to YOLO-compatible TXT format.
-        \item Enriches feature representations with both macro-level and micro-level cues.
-    \end{itemize}
+    \item \textbf{Category 1 (Intact Egg):} Normal undamaged egg body.
+    \item \textbf{Category 2 (Cracked Egg):} Entire egg body displaying cracks.
+    \item \textbf{Category 3 (Crack Region):} Specific localized micro-damage zone.
 \end{itemize}
+\vspace{-0.1cm}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.92\linewidth,height=0.52\textheight,keepaspectratio]{classificationCategories.png}
+    \vspace{-0.2cm}
+    \caption{\scriptsize Classification categories: Intact eggs, cracked eggs and localized crack regions.}
+\end{figure}
 \end{frame}
 
 %=====================================================
 \section{Proposed Improved YOLOv8 Methodology}
 %=====================================================
 
-% ==================== SLIDE 10: ARCHITECTURE OVERVIEW ====================
-\begin{frame}{Improved YOLOv8 Network Architecture Overview}
-% [FIGURE GUIDANCE]:
-% Figure 3 split into two horizontal parts for enhanced legibility.
-% Part 1: Main improved YOLOv8 detection architecture (Backbone, BiFPN neck, 4 Detect heads).
-% Part 2: Detailed sub-module blocks (C2f_1, C2f_2, BottleNeck, SPPF).
+% ==================== SLIDE 12: ARCHITECTURE OVERVIEW (MAIN PIPELINE) ====================
+\begin{frame}{Improved YOLOv8 Network Architecture: Main Pipeline}
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\linewidth,height=0.42\textheight, keepaspectratio]{figure3_improved_yolov8_architecture_1.jpg}
-    \hfill
-    \includegraphics[width=0.48\linewidth,height=0.42\textheight, keepaspectratio]{figure3_improved_yolov8_architecture_2.jpg}
+    \includegraphics[width=0.95\linewidth,height=0.78\textheight,keepaspectratio]{figure3_improved_yolov8_architecture_1.jpg}
     \vspace{-0.2cm}
-    \caption{\scriptsize Architecture of the proposed improved YOLOv8 model (Source: Base Paper Figure 3)}
-    \end{figure}
+    \caption{\scriptsize Improved YOLOv8 overall detection architecture (Source: Base Paper Figure 3).}
+\end{figure}
+\end{frame}
+
+% ==================== SLIDE 13: ARCHITECTURAL SUB-MODULES ====================
+\begin{frame}{Improved YOLOv8: Structural Sub-Module Details}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\linewidth,height=0.78\textheight,keepaspectratio]{figure3_improved_yolov8_architecture_2.jpg}
     \vspace{-0.2cm}
-    \begin{itemize}
-        \item Retains anchor-free split Ultralytics head for optimal accuracy-speed trade-off.
-        \item Integrates four dedicated innovations: DCNv2, BiFPN, Small Object Head and WIoUv2.
+    \caption{\scriptsize Detailed network sub-module structures: C2f, BottleNeck and SPPF (Source: Base Paper Figure 3).}
+\end{figure}
+\end{frame}
+
+% ==================== SLIDE 13: DCNv2 ====================
+\begin{frame}{Architectural Enhancement 1: Deformable Convolutions (DCNv2)}
+\begin{itemize}
+    \item \textbf{Motivation:} Standard square kernels cannot conform to irregular, jagged crack geometry.
+    \item \textbf{Mechanism:} DCNv2 adds learnable spatial offsets and dynamic modulation scalars to adapt receptive fields.
+\end{itemize}
+\vspace{-0.15cm}
+\begin{equation*}
+Y(q) = \sum_{k=1}^{K} w_k X(q + q_k + \Delta q_k) \Delta m_k
+\end{equation*}
+\vspace{-0.25cm}
+\textbf{Symbol Definitions:}
+\vspace{0.12cm}
+\begin{itemize}
+    \item $X, Y$: Input and output feature maps.
+    \item $q$: Center target coordinate; $q_k$: Predefined grid offset ($k=1,\dots,K$).
+    \item $w_k$: Convolutional kernel weight for the $k$-th location.
+    \item $\Delta q_k$: Learnable 2D spatial offset adapting to geometric crack contours.
+    \item $\Delta m_k$: Learnable modulation scalar ($\Delta m_k \in [0, 1]$) scaling feature amplitude.
 \end{itemize}
 \end{frame}
 
-% ==================== SLIDE 11: DCNv2 ====================
-\begin{frame}{Architectural Enhancement 1: Deformable Convolutions (DCNv2)}
-\begin{columns}[t]
-    \begin{column}{0.54\textwidth}
-        \small
-        \textbf{Limitation of Standard Convolutions:}
-        \begin{itemize}
-            \item Rigid square sampling grids cannot adapt to irregular, jagged crack contours.
-        \end{itemize}
-        \smallskip
-        \textbf{DCNv2 Formulation:}
-        \vspace{-0.15cm}
-        \begin{equation*}
-        \small Y(q) = \sum_{k=1}^{K} w_k X(q + q_k + \Delta q_k) \Delta m_k
-        \end{equation*}
-        \vspace{-0.25cm}
-        \begin{itemize}
-            \item $\Delta q_k$: Learnable 2D spatial offset matching crack geometry.
-            \item $\Delta m_k \in [0, 1]$: Dynamic modulation scalar scaling feature amplitude.
-            \item Amplifies crack features while suppressing background shell noise.
-        \end{itemize}
-    \end{column}
-    \begin{column}{0.46\textwidth}
-        % [FIGURE GUIDANCE]:
-        % Place Figure 4 (Comparison of DNv1, DCNv2 and Normal Conv sampling) here.
-        % File: figure4_dcnv2_sampling_comparison.jpg
-        \begin{figure}[h]
-            \centering
-            \includegraphics[width=\linewidth,height=0.52\textheight, keepaspectratio]{figure4_dcnv2_sampling_comparison.jpg}
-            \vspace{-0.2cm}
-            \caption{\scriptsize Sampling comparison: Normal Conv, DCNv1, DCNv2 (Source: Figure 4)}
-        \end{figure}
-    \end{column}
-\end{columns}
+% ==================== SLIDE 14: DCNv2 SAMPLING (FULL SLIDE FIGURE 4) ====================
+\begin{frame}{DCNv2: Sampling Strategy Comparison}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.88\linewidth,height=0.75\textheight,keepaspectratio]{figure4_dcnv2_sampling_comparison.jpg}
+    \vspace{-0.2cm}
+    \caption{\scriptsize Sampling comparison of Normal Conv, DCNv1 and DCNv2 (Source: Base Paper Figure 4).}
+\end{figure}
 \end{frame}
 
-% ==================== SLIDE 12: BiFPN ====================
+% ==================== SLIDE 15: BiFPN ====================
 \begin{frame}{Architectural Enhancement 2: BiFPN Multi-Scale Fusion}
-\begin{columns}
-    \begin{column}{0.52\textwidth}
-        \textbf{From FPN and PANet to BiFPN:}
-        \begin{itemize}
-            \item \textbf{FPN:} Top-down path for semantic feature integration.
-            \item \textbf{PANet (Default YOLOv8):} Added bottom-up path for low-level spatial features.
-            \item \textbf{BiFPN:} Removes single-edge nodes, adds cross-scale skip connections and repeats blocks.
-        \end{itemize}
-        \medskip
-        \textbf{Key Benefits for Crack Inspection:}
-        \begin{itemize}
-            \item Dynamically weights feature maps based on contribution.
-            \item Maintains strong representation under lighting variations and dirty shell backgrounds.
-        \end{itemize}
-    \end{column}
-    \begin{column}{0.48\textwidth}
-        % [FIGURE GUIDANCE]:
-        % Place Figure 5 (The structure of FPN, PANet and BiFPN) here.
-        % File: figure5_fpn_panet_bifpn_structure.jpg
-        \begin{figure}[h]
-            \centering
-            \includegraphics[width=\linewidth]{figure5_fpn_panet_bifpn_structure.jpg}
-            \caption{Architectural comparison of FPN, PANet and BiFPN (Source: Base Paper Figure 5)}
-        \end{figure}
-    \end{column}
-\end{columns}
+\begin{itemize}
+    \item \textbf{FPN vs PANet vs BiFPN Evolution:}
+    \begin{itemize}
+        \item \textbf{FPN:} Top-down pathway conveying high-level semantics.
+        \item \textbf{PANet (Default YOLOv8):} Adds a bottom-up path for low-level spatial details.
+        \item \textbf{BiFPN:} Removes single-edge nodes, adds cross-scale residual skips and repeats blocks.
+    \end{itemize}
+    \medskip
+    \item \textbf{Weighted Feature Fusion:} Assigns learnable weights to different scale features based on importance.
+    \medskip
+    \item \textbf{Environmental Robustness:} Retains subtle crack cues despite factory lighting changes and shell dirt.
+\end{itemize}
 \end{frame}
 
-% ==================== SLIDE 13: SMALL OBJECT HEAD AND WIoUv2 ====================
+% ==================== SLIDE 16: BiFPN STRUCTURE (FULL SLIDE FIGURE 5) ====================
+\begin{frame}{Feature Pyramid Architectures: FPN, PANet and BiFPN}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth,height=0.75\textheight,keepaspectratio]{figure5_fpn_panet_bifpn_structure.jpg}
+    \vspace{-0.2cm}
+    \caption{\scriptsize Structural comparison of FPN, PANet and BiFPN (Source: Base Paper Figure 5).}
+\end{figure}
+\end{frame}
+
+% ==================== SLIDE 17: SMALL OBJECT HEAD AND WIoUv2 ====================
 \begin{frame}{Enhancements 3 \& 4: Small Target Head and WIoUv2 Loss}
 \begin{itemize}
-    \item \textbf{Enhancement 3: Dedicated Small Object Detection Layer}
+    \item \textbf{Small Target Detection Head (P2 Layer):}
     \begin{itemize}
-        \item Standard YOLOv8 5 downsamplings ($/32$) yield an $80 \times 80$ head with receptive field $8 \times 8$ px; micro-cracks under 8 px vanish in deep layers.
-        \item Integrated a 4th detection head operating on a $160 \times 160$ feature map (P2 layer).
-        \item Directly captures fine spatial textures and edge gradients from earlier stages.
+        \item Default YOLOv8 downsamples 5 times ($/32$); smallest head ($80 \times 80$) misses sub-8 px cracks.
+        \item Added a 4th head on $160 \times 160$ feature map, directly utilizing early spatial details.
     \end{itemize}
-    \medskip
-    \item \textbf{Enhancement 4: Wise-IoU v2 (WIoUv2) Loss Function}
-    \begin{equation*}
-    L_{\text{WIoUv2}} = L_{\text{IoU}}^{\gamma*} L_{\text{WIoUv1}}, \quad \gamma > 0
-    \end{equation*}
-    \begin{itemize}
-        \item Standard CIoU ignores sample quality variations during dynamic conveyor motion.
-        \item Dynamic focusing factor $L_{\text{IoU}}^{\gamma*}$ adaptively balances gradient contributions.
-        \item Handles class imbalance and enhances detection of occluded or motion-blurred cracks.
-    \end{itemize}
+    \item \textbf{Wise-IoU v2 (WIoUv2) Loss Function:}
+\end{itemize}
+\vspace{-0.15cm}
+\begin{equation*}
+L_{\text{WIoUv2}} = L_{\text{IoU}}^{\gamma*} L_{\text{WIoUv1}}, \quad \gamma > 0
+\end{equation*}
+\vspace{-0.25cm}
+\textbf{Symbol Definitions:}
+\vspace{0.12cm}
+\begin{itemize}
+    \item $L_{\text{WIoUv2}}$: Final Wise-IoU v2 bounding box regression loss.
+    \item $L_{\text{WIoUv1}}$: Wise-IoU v1 loss with distance and aspect penalties.
+    \item $L_{\text{IoU}}^{\gamma*}$: Normalized dynamic non-monotonic focusing scaling factor.
+    \item $\gamma$: Modulation parameter adaptively balancing gradient contributions.
 \end{itemize}
 \end{frame}
 
-% ==================== SLIDE 14: DUAL VERIFICATION MECHANISM ====================
+% ==================== SLIDE 18: DUAL VERIFICATION ====================
 \begin{frame}{Dual Verification Decision-Making Mechanism}
 \begin{itemize}
-    \item \textbf{Post-Processing Decision Rule:}
-    \begin{itemize}
-        \item Standard sorting systems decide based only on whole-egg bounding boxes.
-        \item Under the proposed rule, an egg is tagged as \textbf{damaged} if the detector outputs:
-        \begin{center}
-            \textbf{Category 2 (Cracked Egg)} \quad \textit{OR} \quad \textbf{Category 3 (Crack Region)}
-        \end{center}
-    \end{itemize}
-    \medskip
-    \item \textbf{Mathematical Joint Miss Rate Reduction:}
-    \begin{itemize}
-        \item A damaged egg is missed \textbf{only if both} Category 2 and Category 3 fail simultaneously:
-        \begin{equation*}
-        P(\text{Miss}_{\text{Overall}}) = P(\text{Miss}_{\text{Egg}}) \times P(\text{Miss}_{\text{Region}})
-        \end{equation*}
-        \item Global shape cues and local fracture cues cross-verify each other.
-        \item Lowers industrial false negative rates while preventing unnecessary waste.
-    \end{itemize}
+    \item \textbf{Decision Rule:} An egg is classified as \textbf{damaged} if the detector outputs:
+    \begin{center}
+        \textbf{Category 2 (Cracked Egg)} \quad \textit{OR} \quad \textbf{Category 3 (Crack Region)}
+    \end{center}
+    \item \textbf{Mutual Redundancy:} A cracked egg is missed \textbf{only if both} detectors fail simultaneously:
+\end{itemize}
+\vspace{-0.15cm}
+\begin{equation*}
+P(\text{Miss}_{\text{Overall}}) = P(\text{Miss}_{\text{Egg}}) \times P(\text{Miss}_{\text{Region}})
+\end{equation*}
+\vspace{-0.25cm}
+\textbf{Symbol Definitions:}
+\vspace{0.12cm}
+\begin{itemize}
+    \item $P(\text{Miss}_{\text{Overall}})$: Total probability of failing to identify a cracked egg.
+    \item $P(\text{Miss}_{\text{Egg}})$: False negative rate of overall cracked egg detector.
+    \item $P(\text{Miss}_{\text{Region}})$: False negative rate of crack region detector.
 \end{itemize}
 \end{frame}
 
@@ -351,60 +342,52 @@ Department of Computer Science and Engineering \\ College of Engineering, Cherth
 \section{Experimental Setup and Evaluation}
 %=====================================================
 
-% ==================== SLIDE 15: EXPERIMENTAL ENVIRONMENT ====================
+% ==================== SLIDE 19: EXPERIMENTAL SETUP ====================
 \begin{frame}{Experimental Platform and Training Setup}
-\begin{columns}
-    \begin{column}{0.54\textwidth}
-        \textbf{Hardware and Software Specifications:}
-        \begin{itemize}
-            \item \textbf{Operating System:} Windows 10
-            \item \textbf{Framework:} Python 3.8, PyTorch 1.13.1, CUDA 11.6
-            \item \textbf{Processor:} Intel Core i5-10400F @ 2.9 GHz
-            \item \textbf{Graphics Card:} NVIDIA GeForce RTX 3060 (12 GB VRAM)
-            \item \textbf{System Memory:} 32 GB DDR4 (3200 MHz)
-        \end{itemize}
-        \medskip
-        \textbf{Hyperparameters:}
-        \begin{itemize}
-            \item Input resolution: $640 \times 640$ pixels
-            \item Epochs: 300 iterations; Batch size: 16
-            \item Initial learning rate: 0.01; Seed: 42
-            \item Trained strictly from scratch (no pre-trained weights).
-        \end{itemize}
-    \end{column}
-    \begin{column}{0.46\textwidth}
-        % [FIGURE GUIDANCE]:
-        % Place Figure 6 (Training schematic of the cracked eggs detection model) here.
-        % File: figure6_training_schematic.jpg
-        \begin{figure}[h]
-            \centering
-            \includegraphics[width=\linewidth]{figure6_training_schematic.jpg}
-            \caption{Training and validation workflow (Source: Base Paper Figure 6)}
-        \end{figure}
-    \end{column}
-\end{columns}
+\begin{itemize}
+    \item \textbf{Hardware Setup:} Intel Core i5-10400F @ 2.9 GHz, NVIDIA GeForce RTX 3060 (12 GB VRAM), 32 GB DDR4 RAM.
+    \medskip
+    \item \textbf{Software Environment:} Windows 10, Python 3.8, PyTorch 1.13.1, CUDA 11.6.
+    \medskip
+    \item \textbf{Image Resolution:} $640 \times 640$ pixels.
+    \medskip
+    \item \textbf{Training Epochs:} 300 epochs (trained completely from scratch, batch size: 16).
+    \medskip
+    \item \textbf{Hyperparameters:} Initial learning rate: 0.01; random seed: 42.
+\end{itemize}
 \end{frame}
 
-% ==================== SLIDE 16: EVALUATION METRICS ====================
-\begin{frame}{Evaluation Metrics}
+% ==================== SLIDE 20: TRAINING WORKFLOW (FULL SLIDE FIGURE 6) ====================
+\begin{frame}{Model Training and Validation Workflow}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth,height=0.75\textheight,keepaspectratio]{figure6_training_schematic.jpg}
+    \vspace{-0.2cm}
+    \caption{\scriptsize Training schematic of the cracked egg detection model (Source: Base Paper Figure 6).}
+\end{figure}
+\end{frame}
+
+% ==================== SLIDE 21: EVALUATION METRICS ====================
+\begin{frame}{Performance Evaluation Metrics}
+\textbf{Evaluation Formulas:}
+\vspace{-0.15cm}
+\begin{equation*}
+\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}, \quad \text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}
+\end{equation*}
+\vspace{-0.3cm}
+\begin{equation*}
+\text{FNR} = \frac{\text{FN}}{\text{TP} + \text{FN}}, \quad \text{FPR} = \frac{\text{FP}}{\text{FP} + \text{TN}}
+\end{equation*}
+\vspace{-0.25cm}
+\textbf{Symbol Definitions:}
+\vspace{0.12cm}
 \begin{itemize}
-    \item \textbf{Precision (P):} Proportion of detected cracked items that are truly cracked:
-    \begin{equation*}
-    \text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}
-    \end{equation*}
-    \item \textbf{Recall (R):} Proportion of actual cracked items correctly detected:
-    \begin{equation*}
-    \text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}
-    \end{equation*}
-    \item \textbf{Mean Average Precision (mAP@0.5):} Comprehensive accuracy score computed as the area under the PR curve across all categories.
-    \medskip
-    \item \textbf{Frames Per Second (FPS):} Real-time processing speed ($\ge 30$ FPS needed on lines).
-    \medskip
-    \item \textbf{Industrial Reliability Metrics:}
-    \begin{itemize}
-        \item \textbf{False Negative Rate (FNR):} Ratio of missed damaged eggs (product safety).
-        \item \textbf{False Positive Rate (FPR):} Ratio of good eggs falsely rejected (waste control).
-    \end{itemize}
+    \item $\text{TP}$ (True Positives): Defective eggs correctly identified as cracked.
+    \item $\text{FP}$ (False Positives): Intact eggs incorrectly flagged as cracked (false alarms).
+    \item $\text{TN}$ (True Negatives): Intact eggs correctly identified as intact.
+    \item $\text{FN}$ (False Negatives): Cracked eggs incorrectly passed as intact (missed defects).
+    \item \textbf{mAP@0.5:} Mean Average Precision across all classes at IoU threshold 0.5.
+    \item \textbf{FPS:} Frames Per Second (online real-time threshold $\ge 30$ FPS).
 \end{itemize}
 \end{frame}
 
@@ -412,7 +395,7 @@ Department of Computer Science and Engineering \\ College of Engineering, Cherth
 \section{Results and Performance Analysis}
 %=====================================================
 
-% ==================== SLIDE 17: ABLATION STUDY AND COMPLEXITY ====================
+% ==================== SLIDE 22: ABLATION STUDY AND COMPLEXITY ====================
 \begin{frame}{Ablation Study and Model Complexity}
 \begin{table}[h]
 \centering
@@ -441,13 +424,13 @@ Department of Computer Science and Engineering \\ College of Engineering, Cherth
 {\small
 \begin{itemize}
     \setlength{\itemsep}{1pt}
-    \item Small target head yields the largest single mAP gain (+5.3\%). Full ensemble achieves the highest overall Precision (94.1\%) and balanced robustness.
-    \item \textbf{Model Complexity (Table 2):} Parameters: $2.66 \times 10^7$ (+2.7\%), FLOPs: 86.5 G (+9.3\%), Model Size: 51.1 MB (+3.0\%). Significant accuracy boost achieved with minimal overhead.
+    \item Small target head yields the largest single gain (+5.3\% mAP). Full ensemble achieves highest Precision (94.1\%) and balanced robustness.
+    \item \textbf{Model Complexity (Table 2):} Parameters: $2.66 \times 10^7$ (+2.7\%), FLOPs: 86.5 G (+9.3\%), Model Size: 51.1 MB (+3.0\%). Significant accuracy boost with minimal overhead.
 \end{itemize}
 }
 \end{frame}
 
-% ==================== SLIDE 18: BENCHMARK COMPARISON ====================
+% ==================== SLIDE 23: BENCHMARK COMPARISON ====================
 \begin{frame}{Comparative Experiments with Mainstream Detectors}
 \begin{table}[h]
 \centering
@@ -473,88 +456,50 @@ YOLOv11 & 92.7 & 84.3 & 87.3 & 47 \\
 {\small
 \begin{itemize}
     \setlength{\itemsep}{2pt}
-    \item Outperformed Faster R-CNN by 14.8\% mAP despite Faster R-CNN using pretrained weights while our model trained from scratch.
+    \item Outperformed Faster R-CNN by 14.8\% mAP despite Faster R-CNN using pretrained weights.
     \item Outperformed recent YOLOv11 by 5.6\% mAP and baseline YOLOv8 by 5.2\% mAP.
-    \item At 45 FPS, detection speed easily satisfies the production requirement ($\ge 30$ FPS).
+    \item At 45 FPS, detection speed easily satisfies production line requirements ($\ge 30$ FPS).
 \end{itemize}
 }
 \end{frame}
 
-% ==================== SLIDE 19: QUALITATIVE LABORATORY DETECTION ====================
-\begin{frame}{Laboratory Simulated Platform Testing}
-\begin{columns}[t]
-    \begin{column}{0.5\textwidth}
-        % [FIGURE GUIDANCE]:
-        % Place Figure 8 (The accuracy of online detection before and after model improvement) here.
-        % File: figure8_pr_curves_comparison.jpg
-        \begin{figure}[h]
-            \centering
-            \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{figure8_pr_curves_comparison.jpg}
-            \vspace{-0.2cm}
-            \caption{\scriptsize PR curves comparison (Source: Figure 8)}
-        \end{figure}
-    \end{column}
-    \begin{column}{0.5\textwidth}
-        % [FIGURE GUIDANCE]:
-        % Place Figure 9 (Comparison of online detection effects before and after model improvement) here.
-        % File: figure9_detection_effects_comparison.jpg
-        \begin{figure}[h]
-            \centering
-            \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{figure9_detection_effects_comparison.jpg}
-            \vspace{-0.2cm}
-            \caption{\scriptsize Visual detection comparison (Source: Figure 9)}
-        \end{figure}
-    \end{column}
-\end{columns}
-\vspace{-0.25cm}
-{\small
-\begin{itemize}
-    \setlength{\itemsep}{1pt}
-    \item Tested on 115 video frames: improved model achieves 2.5\% higher mAP.
-    \item Successfully identifies micro-cracks where original YOLOv8 produced missed detections.
-\end{itemize}
-}
+% ==================== SLIDE 24: PR CURVES (FULL SLIDE FIGURE 8) ====================
+\begin{frame}{Laboratory Testing: Precision-Recall Curves}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.88\linewidth,height=0.75\textheight,keepaspectratio]{figure8_pr_curves_comparison.jpg}
+    \vspace{-0.2cm}
+    \caption{\scriptsize Precision-Recall curves before and after model improvement (Source: Base Paper Figure 8).}
+\end{figure}
 \end{frame}
 
-% ==================== SLIDE 20: FACTORY TESTING SETUP ====================
-\begin{frame}{Industrial Deployment on Factory Equipment}
-\begin{columns}[t]
-    \begin{column}{0.52\textwidth}
-        \small
-        \textbf{On-Site Equipment (Kyowa/FP-600 Line):}
-        \begin{itemize}
-            \setlength{\itemsep}{1pt}
-            \item Conveyor velocity: 0.1 m/s.
-            \item Camera: A3200CU000 ($1920 \times 1080$) at 120 FPS.
-            \item Host CPU: 12th Gen Intel i5-12400F (2.50 GHz).
-            \item Host GPU: GeForce RTX 3060 Ti 8G; 16 GB RAM.
-            \item Environment: Python 3.8, PyTorch 1.13.1, CUDA 11.6.
-        \end{itemize}
-        \smallskip
-        \textbf{Operational Speed:}
-        \begin{itemize}
-            \item Original YOLOv8: 52 FPS.
-            \item Proposed Model: 45 FPS (fully real-time).
-        \end{itemize}
-    \end{column}
-    \begin{column}{0.48\textwidth}
-        % [FIGURE GUIDANCE]:
-        % Figure 7 split into two stacked parts for clear visualization.
-        % Part 1: figure7_online_deployment_testing_1.jpg (874 x 1009)
-        % Part 2: figure7_online_deployment_testing_2.jpg (1150 x 1009)
-        \begin{figure}[h]
-            \centering
-            \includegraphics[width=0.88\linewidth,height=0.32\textheight,keepaspectratio]{figure7_online_deployment_testing_1.jpg} \\
-            \vspace{0.1cm}
-            \includegraphics[width=0.88\linewidth,height=0.32\textheight,keepaspectratio]{figure7_online_deployment_testing_2.jpg}
-            \vspace{-0.2cm}
-            \caption{\scriptsize Online deployment on factory equipment (Source: Figure 7)}
-        \end{figure}
-    \end{column}
-\end{columns}
+% ==================== SLIDE 25: VISUAL DETECTION (FULL SLIDE FIGURE 9) ====================
+\begin{frame}{Laboratory Testing: Visual Detection Comparison}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.88\linewidth,height=0.75\textheight,keepaspectratio]{figure9_detection_effects_comparison.jpg}
+    \vspace{-0.2cm}
+    \caption{\scriptsize Visual detection comparison on test frames (Source: Base Paper Figure 9). Left: YOLOv8. Right: Improved YOLOv8.}
+\end{figure}
 \end{frame}
 
-% ==================== SLIDE 21: INDUSTRIAL RELIABILITY ANALYSIS ====================
+%=====================================================
+\section{Industrial Deployment and Factory Testing}
+%=====================================================
+
+% ==================== SLIDE 26: FACTORY DEPLOYMENT (FULL SLIDE FIGURE 7) ====================
+\begin{frame}{Industrial Deployment Workflow and Equipment}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\linewidth,height=0.36\textheight,keepaspectratio]{figure7_online_deployment_testing_1.jpg} \\
+    \vspace{0.1cm}
+    \includegraphics[width=0.85\linewidth,height=0.36\textheight,keepaspectratio]{figure7_online_deployment_testing_2.jpg}
+    \vspace{-0.2cm}
+    \caption{\scriptsize Online deployment testing on factory equipment (Source: Base Paper Figure 7).}
+\end{figure}
+\end{frame}
+
+% ==================== SLIDE 27: FACTORY ACCURACY ====================
 \begin{frame}{Factory Online Inspection Accuracy (FNR and FPR)}
 \begin{table}[h]
 \centering
@@ -587,92 +532,85 @@ Class 3: Damaged Area & 22.97 & 0.87 & \textbf{19.19} & \textbf{0.58} \\
 }
 \end{frame}
 
-% ==================== SLIDE 22: VISUAL PRODUCTION LINE DETECTIONS ====================
-\begin{frame}{Production Line Visual Detections and Speed Stability}
-\begin{columns}
-    \begin{column}{0.5\textwidth}
-        % [FIGURE GUIDANCE]:
-        % Place Figure 10 (Detection effect on the actual production line) here.
-        % File: figure10_production_line_detection.jpg
-        \begin{figure}[h]
-            \centering
-            \includegraphics[width=\linewidth]{figure10_production_line_detection.jpg}
-            \caption{Detection on actual production line (Source: Figure 10)}
-        \end{figure}
-    \end{column}
-    \begin{column}{0.5\textwidth}
-        % [FIGURE GUIDANCE]:
-        % Place Figure 11 (Speed of online detection before and after model improvement) here.
-        % File: figure11_online_detection_speed.jpg
-        \begin{figure}[h]
-            \centering
-            \includegraphics[width=\linewidth]{figure11_online_detection_speed.jpg}
-            \caption{Speed stability across 400 frames (Source: Figure 11)}
-        \end{figure}
-    \end{column}
-\end{columns}
-\begin{itemize}
-    \item Stable inference performance across continuous 400-frame video testing.
-    \item Accurately detects cracked eggs and damaged areas under variable industrial lighting.
-\end{itemize}
+% ==================== SLIDE 28: PRODUCTION LINE DETECTIONS (FULL SLIDE FIGURE 10) ====================
+\begin{frame}{Production Line: Visual Detection Results}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.88\linewidth,height=0.75\textheight,keepaspectratio]{figure10_production_line_detection.jpg}
+    \vspace{-0.2cm}
+    \caption{\scriptsize Detection effect on actual production line (Source: Base Paper Figure 10). Green: Intact, Purple: Cracked, Brown: Damaged Area.}
+\end{figure}
+\end{frame}
+
+% ==================== SLIDE 29: SPEED STABILITY (FULL SLIDE FIGURE 11) ====================
+\begin{frame}{Production Line: Detection Speed Stability}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.88\linewidth,height=0.75\textheight,keepaspectratio]{figure11_online_detection_speed.jpg}
+    \vspace{-0.2cm}
+    \caption{\scriptsize Online detection frame rate stability across 400 frames (Source: Base Paper Figure 11).}
+\end{figure}
 \end{frame}
 
 %=====================================================
 \section{Discussion and Conclusion}
 %=====================================================
 
-% ==================== SLIDE 23: DISCUSSION ====================
+% ==================== SLIDE 30: DISCUSSION ====================
 \begin{frame}{Discussion: Operational Findings and Edge Cases}
 \begin{itemize}
-    \item \textbf{Speed vs Accuracy Trade-off:}
-    \begin{itemize}
-        \item Inference speed decreased from 52 FPS to 45 FPS (-14.5\%) due to added layers.
-        \item 45 FPS remains well above the 30 FPS factory threshold, making the 5.2\% mAP boost highly advantageous.
-    \end{itemize}
+    \item \textbf{Speed vs Accuracy Trade-off:} 14.5\% speed reduction (52 to 45 FPS) gives a +5.2\% mAP boost; 45 FPS well exceeds factory line demands ($\ge 30$ FPS).
     \medskip
-    \item \textbf{Adaptability to Eggshell Surface Conditions:}
-    \begin{itemize}
-        \item Successfully validated on both unwashed production eggs and pre-washed supermarket eggs.
-    \end{itemize}
+    \item \textbf{Surface Adaptability:} Demonstrated high detection reliability on both unwashed farm eggs and pre-washed supermarket eggs.
     \medskip
-    \item \textbf{Challenging Edge Cases Identified in the Study:}
-    \begin{itemize}
-        \item \textbf{Solid shells (e.g., duck eggs):} High accuracy due to distinct color and gloss changes.
-        \item \textbf{Patterned shells (e.g., quail eggs):} Intricate natural spots create visual interference.
-        \item \textbf{Fine net-like cracks:} Minute pixel footprint and faint gradients make them difficult to distinguish from shell textures.
-    \end{itemize}
+    \item \textbf{Eggshell Varieties:} Solid shells (duck eggs) show high contrast; patterned shells (quail eggs) create background interference.
+    \medskip
+    \item \textbf{Reticular Micro-Cracks:} Fine net-like cracks possess low pixel areas and weak gradients, posing the primary challenge for future work.
 \end{itemize}
 \end{frame}
 
-% ==================== SLIDE 24: CONCLUSION AND FUTURE SCOPE ====================
+% ==================== SLIDE 31: CONCLUSION AND FUTURE SCOPE ====================
 \begin{frame}{Conclusion and Future Scope}
 \textbf{Conclusion:}
 \begin{itemize}
-    \item Established an end-to-end real-time cracked egg inspection system combining rotational conveyance, improved YOLOv8 and dual verification.
-    \item Integrated DCNv2, BiFPN, WIoUv2 and a P2 small target head, achieving 92.9\% mAP (+5.2\% over baseline) and surpassing Faster R-CNN, YOLOv5 and YOLOv11.
-    \item Attained 45 FPS and lowered compound broken egg miss rate to 1.06\% on factory equipment, satisfying industrial online sorting criteria.
+    \item Developed a real-time detection system combining rotational conveyance, improved YOLOv8 and dual verification.
+    \item Integrated DCNv2, BiFPN, WIoUv2 and a P2 small target head, achieving 92.9\% mAP and 45 FPS.
+    \item Lowered compound broken egg miss rate to 1.06\% on factory equipment, meeting industrial inspection criteria.
 \end{itemize}
+\bigskip
 \textbf{Future Scope:}
 \begin{itemize}
-    \item Adopt dark-box illumination to increase visibility of low-contrast net-like cracks.
-    \item Expand datasets to other avian eggs and integrate internal defect detection (scattered yolk, blood spots).
+    \item Adopt dark-box illumination setups to enhance contrast for faint net-like hairline cracks.
+    \item Explore super-resolution and attention-guided magnification for micro-defects.
+    \item Expand datasets to diverse poultry species and integrate internal defect detection (scattered yolk, blood spots).
 \end{itemize}
 \end{frame}
 
-% ==================== SLIDE 25: REFERENCES ====================
-\begin{frame}{References}
+% ==================== SLIDE 32: REFERENCES PART 1 ====================
+\begin{frame}{References: Foundational and Survey Literature}
 \scriptsize
-\begin{thebibliography}{6}
+\begin{thebibliography}{5}
 \bibitem[1]{sun2026} D. Sun, H. Wei, Y. Luo, W. Li and Y. Yu, ``Real-Time Detection Method for Cracked Eggs Based on Improved YOLOv8 and Dual Verification With Triple Classification Granularity,'' \textit{IEEE Access}, vol. 14, pp. 62322-62333, 2026.
-\bibitem[2]{zhu2019} X. Zhu, H. Hu, S. Lin and J. Dai, ``Deformable ConvNets v2: More Deformable, Better Results,'' in \textit{Proc. IEEE/CVF CVPR}, pp. 9308-9316, 2019.
-\bibitem[3]{tan2020} M. Tan, R. Pang and Q. V. Le, ``EfficientDet: Scalable and Efficient Object Detection,'' in \textit{Proc. IEEE/CVF CVPR}, pp. 10778-10787, 2020.
-\bibitem[4]{tong2023} Z. Tong, Y. Chen, Z. Xu and R. Yu, ``Wise-IoU: Bounding Box Regression Loss with Dynamic Focusing Mechanism,'' \textit{arXiv:2301.10051}, 2023.
-\bibitem[5]{huang2023} Y. Huang, Y. Luo, Y. Cao, X. Lin, H. Wei, et al., ``Damage Detection of Unwashed Eggs Through Video and Deep Learning,'' \textit{Foods}, vol. 12, no. 11, p. 2179, 2023.
-\bibitem[6]{liang2020} D. Liang, P. Li, D. Liang, J. Qian and B. Li, ``Integrated Detection and Grading System for Internal and External Quality of Eggs Based on Machine Vision,'' \textit{J. Chin. Inst. Food Sci. Technol.}, vol. 20, no. 11, pp. 247-254, 2020.
+\bibitem[2]{liang2020} D. Liang, P. Li, D. Liang, J. Qian and B. Li, ``Integrated detection and grading system for internal and external quality of eggs based on machine vision,'' \textit{J. Chin. Inst. Food Sci. Technol.}, vol. 20, no. 11, pp. 247-254, 2020.
+\bibitem[3]{datta2019} A. Datta, B. Botta and S. Gattam, ``Damage detection on chicken eggshells using faster R-CNN,'' in \textit{Proc. ASABE Annu. Int. Meeting}, 2019, p. 1244.
+\bibitem[4]{turkoglu2021} M. Turkoglu, ``Defective egg detection based on deep features and bidirectional long-short-term-memory,'' \textit{Comput. Electron. Agricult.}, vol. 185, Jun. 2021, Art. no. 106152.
+\bibitem[5]{botta2022} B. Botta, S. S. R. Gattam and A. K. Datta, ``Eggshell crack detection using deep convolutional neural networks,'' \textit{J. Food Eng.}, vol. 315, Feb. 2022, Art. no. 110798.
 \end{thebibliography}
 \end{frame}
 
-% ==================== FINAL SLIDE ====================
+% ==================== SLIDE 33: REFERENCES PART 2 ====================
+\begin{frame}{References: YOLO Adaptations and Architectures}
+\scriptsize
+\begin{thebibliography}{5}
+\bibitem[6]{yin2024} J. Yin, J. Kang and D. Xiao, ``Lightweight duck egg crack detection algorithm based on improved YOLOv5l,'' \textit{Trans. Chin. Soc. Agricult. Eng.}, vol. 40, no. 1, pp. 165-173, 2024.
+\bibitem[7]{huang2023} Y. Huang, Y. Luo, Y. Cao, X. Lin, H. Wei, M. Wu, X. Yang and Z. Zhao, ``Damage detection of unwashed eggs through video and deep learning,'' \textit{Foods}, vol. 12, no. 11, p. 2179, 2023.
+\bibitem[8]{zhu2019} X. Zhu, H. Hu, S. Lin and J. Dai, ``Deformable ConvNets v2: More Deformable, Better Results,'' in \textit{Proc. IEEE/CVF CVPR}, 2019, pp. 9308-9316.
+\bibitem[9]{tan2020} M. Tan, R. Pang and Q. V. Le, ``EfficientDet: Scalable and Efficient Object Detection,'' in \textit{Proc. IEEE/CVF CVPR}, 2020, pp. 10778-10787.
+\bibitem[10]{tong2023} Z. Tong, Y. Chen, Z. Xu and R. Yu, ``Wise-IoU: Bounding Box Regression Loss with Dynamic Focusing Mechanism,'' \textit{arXiv preprint arXiv:2301.10051}, 2023.
+\end{thebibliography}
+\end{frame}
+
+% ==================== SLIDE 34: FINAL SLIDE ====================
 \begin{frame}
 \centering
 \Huge \textbf{Thank You!} \\
