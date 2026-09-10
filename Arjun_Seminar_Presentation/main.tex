@@ -10,15 +10,15 @@
 \usepackage{tabularx}
 
 % Metadata
-\title[Cracked Egg Detection via Improved YOLOv8]{\large \textbf{REAL-TIME DETECTION METHOD FOR CRACKED EGGS BASED ON IMPROVED YOLOV8 AND DUAL VERIFICATION WITH TRIPLE CLASSIFICATION GRANULARITY}}
+\title[Cracked Egg Detection]{\large \textbf{REAL-TIME DETECTION METHOD FOR CRACKED EGGS BASED ON IMPROVED YOLOV8 AND DUAL VERIFICATION WITH TRIPLE CLASSIFICATION GRANULARITY}}
 \subtitle{CSQ413 Seminar Presentation}
 
-\author{
+\author[Arjun Manoj | CEC23CS043]{
 \textbf{Submitted by:} \\ ARJUN MANOJ (CEC23CS043) \\[0.25cm]
 \textbf{Under the Guidance of:} \\ Mrs. NANDANA RAJ R \\ Assistant Professor
 }
 
-\institute{
+\institute[]{
 Department of Computer Science and Engineering \\ College of Engineering, Cherthala
 }
 
@@ -42,6 +42,7 @@ Department of Computer Science and Engineering \\ College of Engineering, Cherth
 
 % ==================== SLIDE 3: INTRODUCTION ====================
 \begin{frame}{Introduction}
+\small
 \begin{itemize}
     \item \textbf{Commercial Significance:} Eggshell integrity is a vital quality indicator in the poultry industry.
     \medskip
@@ -57,6 +58,7 @@ Department of Computer Science and Engineering \\ College of Engineering, Cherth
 
 % ==================== SLIDE 4: LIMITATIONS OF EXISTING METHODS ====================
 \begin{frame}{Limitations of Existing Methods}
+\small
 \begin{itemize}
     \item \textbf{Acoustic Resonance Methods:}
     \begin{itemize}
@@ -81,6 +83,7 @@ Department of Computer Science and Engineering \\ College of Engineering, Cherth
 
 % ==================== SLIDE 5: RESEARCH OBJECTIVES ====================
 \begin{frame}{Research Objectives and Key Contributions}
+\small
 \textbf{Primary Objective:} Develop an industrial-grade, real-time online detection method for unwashed cracked eggs on dynamic production lines.
 
 \bigskip
@@ -154,6 +157,7 @@ Damage detection of unwashed eggs \newline \textit{Huang et al. (2023)} & YOLOv5
 
 % ==================== SLIDE 8: SYSTEM HARDWARE ====================
 \begin{frame}{System Hardware and Conveying Mechanism}
+\small
 \begin{itemize}
     \item \textbf{Multi-Channel Conveyor:} 6 parallel channels carrying 60 eggs/min each (total throughput: 360 eggs/min).
     \medskip
@@ -179,6 +183,7 @@ Damage detection of unwashed eggs \newline \textit{Huang et al. (2023)} & YOLOv5
 
 % ==================== SLIDE 10: DATASET ACQUISITION ====================
 \begin{frame}{Dataset Acquisition and Preparation}
+\small
 \begin{itemize}
     \item \textbf{Industrial Collection:} Captured on live conveyor at Guangzhou Suiping Enterprise Co., Ltd.
     \medskip
@@ -266,6 +271,7 @@ Y(q) = \sum_{k=1}^{K} w_k X(q + q_k + \Delta q_k) \Delta m_k
 
 % ==================== SLIDE 15: BiFPN ====================
 \begin{frame}{Architectural Enhancement 2: BiFPN Multi-Scale Fusion}
+\small
 \begin{itemize}
     \item \textbf{FPN vs PANet vs BiFPN Evolution:}
     \begin{itemize}
@@ -344,6 +350,7 @@ P(\text{Miss}_{\text{Overall}}) = P(\text{Miss}_{\text{Egg}}) \times P(\text{Mis
 
 % ==================== SLIDE 19: EXPERIMENTAL SETUP ====================
 \begin{frame}{Experimental Platform and Training Setup}
+\small
 \begin{itemize}
     \item \textbf{Hardware Setup:} Intel Core i5-10400F @ 2.9 GHz, NVIDIA GeForce RTX 3060 (12 GB VRAM), 32 GB DDR4 RAM.
     \medskip
@@ -558,6 +565,7 @@ Class 3: Damaged Area & 22.97 & 0.87 & \textbf{19.19} & \textbf{0.58} \\
 
 % ==================== SLIDE 30: DISCUSSION ====================
 \begin{frame}{Discussion: Operational Findings and Edge Cases}
+\small
 \begin{itemize}
     \item \textbf{Speed vs Accuracy Trade-off:} 14.5\% speed reduction (52 to 45 FPS) gives a +5.2\% mAP boost; 45 FPS well exceeds factory line demands ($\ge 30$ FPS).
     \medskip
@@ -571,6 +579,7 @@ Class 3: Damaged Area & 22.97 & 0.87 & \textbf{19.19} & \textbf{0.58} \\
 
 % ==================== SLIDE 31: CONCLUSION AND FUTURE SCOPE ====================
 \begin{frame}{Conclusion and Future Scope}
+\small
 \textbf{Conclusion:}
 \begin{itemize}
     \item Developed a real-time detection system combining rotational conveyance, improved YOLOv8 and dual verification.
