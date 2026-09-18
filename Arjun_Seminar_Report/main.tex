@@ -32,14 +32,21 @@
 \usepackage{amsmath,amssymb}
 \usepackage{enumitem}
 \usepackage{hyperref}
-\usepackage{booktabs}
 \usepackage{array}
 \usepackage{caption}
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{ragged2e}
-\usepackage[nottoc]{tocbibind}
+\usepackage[nottoc,notlof,notlot]{tocbibind}
 \usepackage{longtable}
+\usepackage{etoolbox}
+
+% Remove 10pt inter-chapter vertical gaps in List of Figures and List of Tables
+\makeatletter
+\def\ttl@addvspace#1#2{}
+\patchcmd{\@chapter}{\addtocontents{lof}{\protect\addvspace{10\p@}}}{}{}{}
+\patchcmd{\@chapter}{\addtocontents{lot}{\protect\addvspace{10\p@}}}{}{}{}
+\makeatother
 
 %=========================================================
 % HYPERLINK SETTINGS
@@ -96,11 +103,13 @@
     {}
 
 %=========================================================
-% TABLE OF CONTENTS FORMATTING
+% TABLE OF CONTENTS AND LIST FORMATTING
 %=========================================================
 
 \setlength{\cftbeforechapskip}{10pt}
 \setlength{\cftbeforesecskip}{4pt}
+\setlength{\cftbeforefigskip}{4pt}
+\setlength{\cftbeforetabskip}{4pt}
 
 \renewcommand{\cftchapfont}{\fontsize{12}{14}\selectfont\bfseries}
 \renewcommand{\cftsecfont}{\fontsize{12}{14}\selectfont}
@@ -108,11 +117,15 @@
 \renewcommand{\cftchappagefont}{\fontsize{12}{14}\selectfont\bfseries}
 \renewcommand{\cftsecpagefont}{\fontsize{12}{14}\selectfont}
 
-\renewcommand{\cfttoctitlefont}
-    {\hfill\fontsize{14}{17}\selectfont\bfseries}
+\setlength{\cftbeforetoctitleskip}{-0.5cm}
+\setlength{\cftaftertoctitleskip}{0.8cm}
 
-\renewcommand{\cftaftertoctitle}
-    {\hfill}
+\renewcommand{\cfttoctitlefont}{\hfill\fontsize{24}{28}\selectfont\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill}
+\renewcommand{\cftloftitlefont}{\hfill\fontsize{24}{28}\selectfont\bfseries}
+\renewcommand{\cftafterloftitle}{\hfill}
+\renewcommand{\cftlottitlefont}{\hfill\fontsize{24}{28}\selectfont\bfseries}
+\renewcommand{\cftafterlottitle}{\hfill}
 
 %=========================================================
 % HEADER AND FOOTER
@@ -202,7 +215,7 @@
 \begin{document}
 
 %=========================================================
-% COVER PAGE
+% COVER PAGE (FIRST TITLE PAGE)
 %=========================================================
 
 \begin{titlepage}
@@ -213,20 +226,21 @@
 
 {\Large\bfseries A SEMINAR REPORT ON}\par
 
-\vspace{0.5cm}
+\vspace{0.6cm}
 
-{\fontsize{17}{21}\selectfont\bfseries
+{\fontsize{15}{21}\selectfont\bfseries
 REAL-TIME DETECTION METHOD FOR CRACKED EGGS\\
-BASED ON IMPROVED YOLOV8 AND DUAL VERIFICATION\\
-WITH TRIPLE CLASSIFICATION GRANULARITY}\par
+BASED ON IMPROVED YOLOV8 AND DUAL\\
+VERIFICATION WITH TRIPLE\\
+CLASSIFICATION GRANULARITY\\}\par
 
-\vfill
+\vspace{0.8cm}
 
 {\large\itshape Submitted By}\par
 \vspace{0.2cm}
 {\large\bfseries\itshape \studentname\ (\rollno)}\par
 
-\vfill
+\vspace{0.6cm}
 
 {\large\itshape under the esteemed guidance of}\par
 \vspace{0.2cm}
@@ -250,13 +264,13 @@ WITH TRIPLE CLASSIFICATION GRANULARITY}\par
 {\large\bfseries PHONE: 0478 2553416, FAX: 0478 2552714}\par
 {\large\bfseries http://www.cectl.ac.in}\par
 
-\vspace*{0.3cm}
+\vspace*{0.2cm}
 \end{center}
 \end{titlepage}
 
-% =========================================================
+%=========================================================
 % SECOND TITLE PAGE
-% =========================================================
+%=========================================================
 
 \begin{titlepage}
 \thispagestyle{empty}
@@ -268,26 +282,27 @@ WITH TRIPLE CLASSIFICATION GRANULARITY}\par
 
 \vspace{0.45cm}
 
-{\fontsize{16}{20}\selectfont\bfseries
+{\fontsize{15}{21}\selectfont\bfseries
 REAL-TIME DETECTION METHOD FOR CRACKED EGGS\\
-BASED ON IMPROVED YOLOV8 AND DUAL VERIFICATION\\
-WITH TRIPLE CLASSIFICATION GRANULARITY}\par
+BASED ON IMPROVED YOLOV8 AND DUAL\\
+VERIFICATION WITH TRIPLE\\
+CLASSIFICATION GRANULARITY\\}\par
 
-\vspace{0.55cm}
+\vspace{0.5cm}
 
 {\large\itshape Submitted By}\par
-\vspace{0.2cm}
+\vspace{0.15cm}
 {\large\bfseries\itshape \studentname\ (\rollno)}\par
 
-\vspace{0.4cm}
+\vspace{0.35cm}
 
 {\large\itshape under the esteemed guidance of}\par
-\vspace{0.2cm}
+\vspace{0.15cm}
 {\large\bfseries\itshape \guidename}\par
 \vspace{0.1cm}
 {\large\itshape (Assistant Professor)}\par
 
-\vspace{0.4cm}
+\vspace{0.35cm}
 
 {\large\itshape In partial fulfillment of the requirements for the award of the degree}\par
 {\large\itshape of}\par
@@ -299,7 +314,7 @@ WITH TRIPLE CLASSIFICATION GRANULARITY}\par
 
 \vfill
 
-\includegraphics[width=3.2cm]{logo.jpg}\par
+\includegraphics[width=3.0cm]{logo.jpg}\par
 
 \vfill
 
@@ -315,9 +330,9 @@ WITH TRIPLE CLASSIFICATION GRANULARITY}\par
 \end{center}
 \end{titlepage}
 
-% =========================================================
-% CERTIFICATE
-% =========================================================
+%=========================================================
+% CERTIFICATE PAGE
+%=========================================================
 
 \thispagestyle{empty}
 \begin{center}
@@ -330,35 +345,34 @@ WITH TRIPLE CLASSIFICATION GRANULARITY}\par
 {\Large\bfseries C E R T I F I C A T E}\par
 \end{center}
 
-\vspace{0.5cm}
+\vspace{0.4cm}
 \noindent
 This is to certify that, the seminar report titled \textbf{\textit{\reporttitle}} is a bonafide record of the \textbf{CSQ413 SEMINAR} presented by \textbf{\studentname\ (\rollno)}, Seventh Semester B.Tech. Computer Science \& Engineering student, under our guidance and supervision, in partial fulfillment of the requirements for the award of the degree B.Tech. Computer Science \& Engineering of APJ Abdul Kalam Technological University.
 
-\vspace{1.2cm}
+\vspace{3.75cm}
 \begin{center}
-\begin{tabular}{@{}c@{\hspace{0.45cm}}c@{\hspace{0.45cm}}c@{}}
-\textbf{Guide} & \textbf{Co-ordinator} & \textbf{HoD}\\[0.75cm]
+\begin{tabular}{@{}c@{\hspace{0.4cm}}c@{\hspace{0.4cm}}c@{}}
+\textbf{Guide} & \textbf{Co-ordinator} & \textbf{HoD}\\[1.6cm]
 
-\parbox[c][0.55cm][c]{4.3cm}{\centering \guidename} &
-\parbox[c][0.55cm][c]{4.3cm}{\centering \coordinator} &
-\parbox[c][0.55cm][c]{4.3cm}{\centering \hodname}\\[0.25cm]
+\guidename & \coordinator & \hodname\\[0.15cm]
 
-\parbox[c][0.45cm][c]{4.3cm}{\centering Assistant Professor} &
-\parbox[c][0.45cm][c]{4.3cm}{\centering Assistant Professor} &
-\parbox[c][0.45cm][c]{4.3cm}{\centering Professor}\\[0.25cm]
+Assistant Professor & Assistant Professor & Professor\\[0.15cm]
 
-\parbox[c][1.35cm][c]{4.3cm}{\centering \small Dept. of Computer Science} &
-\parbox[c][1.35cm][c]{4.3cm}{\centering \small Dept. of Computer Science} &
-\parbox[c][1.35cm][c]{4.3cm}{\centering \small Dept. of Computer Science}
+\parbox[t]{5cm}{\centering Dept. of Computer Science\\\& Engineering} &
+\parbox[t]{5cm}{\centering Dept. of Computer Science\\\& Engineering} &
+\parbox[t]{5cm}{\centering Dept. of Computer Science\\\& Engineering}
 
 \end{tabular}
 \end{center}
 
 \newpage
 
-% =========================================================
+%=========================================================
 % ACKNOWLEDGEMENT
-% =========================================================
+%=========================================================
+
+\pagenumbering{roman}
+\setcounter{page}{1}
 
 \chapter*{ACKNOWLEDGEMENT}
 This seminar work would not have been possible without the support and encouragement of many people. First and foremost, I give thanks to Almighty God who gave me the strength, resources and ability to complete the seminar successfully.
@@ -367,7 +381,7 @@ I would like to express my sincere gratitude to our Principal, \textbf{\principa
 
 I am also deeply grateful to the Head of the Department, \textbf{\hodname}, for her encouragement and support throughout the seminar work.
 
-I extend my heartfelt thanks to my seminar co-ordinator, \textbf{\coordinator},\\\textbf{Mrs.~Seethamol~S} and \textbf{Mrs.~Vidya~S~Mony}, Assistant Professors, Department of Computer Science and Engineering, for their valuable coordination and guidance. I am especially grateful to my guide, \textbf{\guidename}, Assistant Professor, Department of Computer Science and Engineering, for her constant guidance, encouragement and constructive suggestions throughout this seminar.
+I extend my heartfelt thanks to our seminar co-ordinators, \textbf{Mrs.~Deepa~C~G}, Assistant Professor, Department of Computer Science and Engineering, \textbf{Mrs.~Seethamol~S}, Assistant Professor, Department of Computer Science and Engineering and \textbf{Mrs.~Vidya~S~Mony}, Assistant Professor, Department of Computer Science and Engineering for their valuable coordination and guidance. I am especially grateful to my guide, \textbf{\guidename}, Assistant Professor, Department of Computer Science and Engineering, for her constant guidance, encouragement and constructive suggestions throughout this seminar.
 
 I would also like to thank my dear friends for their cooperation and encouragement throughout the seminar. Their support and understanding made the completion of this work easier and more meaningful.
 
@@ -378,8 +392,6 @@ I would also like to thank my dear friends for their cooperation and encourageme
 %=========================================================
 
 \chapter*{ABSTRACT}
-
-\addcontentsline{toc}{chapter}{Abstract}
 
 Eggshell integrity is a vital commercial quality indicator in the poultry processing industry. Approximately 3\% of fresh eggs suffer shell damage during production, handling, packaging and transit. Defective shells facilitate rapid bacterial penetration by pathogens such as \textit{Salmonella}, lead to internal moisture loss, cause liquid leakage and inflict substantial financial losses on poultry producers. Conventional sorting relies heavily on manual visual inspection, which is labor-intensive, subjective and vulnerable to worker visual fatigue. Non-destructive acoustic and traditional vision techniques struggle on dynamic conveyor lines due to factory acoustic noise, fluctuating illumination and natural dirt on unwashed eggs. Furthermore, conventional conveyors lack egg rotation mechanisms, leaving bottom surfaces uninspected.
 
@@ -393,8 +405,6 @@ At the network architectural level, the baseline YOLOv8 model is structurally op
 % TABLE OF CONTENTS
 %=========================================================
 
-\pagenumbering{roman}
-
 \tableofcontents
 
 \clearpage
@@ -403,7 +413,28 @@ At the network architectural level, the baseline YOLOv8 model is structurally op
 % LIST OF FIGURES
 %=========================================================
 
-\listoffigures
+\clearpage
+\markboth{List of Figures}{}
+\thispagestyle{fancy}
+
+\vspace*{-0.5cm}
+{\centering\fontsize{24}{28}\selectfont\bfseries List of Figures\par}
+\vspace{0.8cm}
+
+\makeatletter
+\l@figure{\numberline{2.1}{Structural schematic and operational overview of the egg conveying device}}{\pageref{fig:conveyor_device}}
+\l@figure{\numberline{2.2}{Machine vision system architecture and industrial camera installation}}{\pageref{fig:vision_system}}
+\l@figure{\numberline{2.3}{Triple classification granularity scheme: Intact Egg, Cracked Egg and Crack Region}}{\pageref{fig:categories}}
+\l@figure{\numberline{2.4}{Detailed architectural layout of the improved YOLOv8 framework}}{\pageref{fig:yolov8_arch}}
+\l@figure{\numberline{2.5}{Comparison of regular convolution sampling and DCNv2 deformable sampling on irregular cracks}}{\pageref{fig:dcnv2_sampling}}
+\l@figure{\numberline{2.6}{Architectural comparison of multi-scale feature fusion structures: FPN, PANet and BiFPN}}{\pageref{fig:bifpn_structure}}
+\l@figure{\numberline{2.7}{Comprehensive technical workflow spanning offline training, model export and online inference}}{\pageref{fig:training_schematic}}
+\l@figure{\numberline{3.1}{Precision-Recall curves comparison between baseline YOLOv8 and the proposed model across all target categories}}{\pageref{fig:pr_curves}}
+\l@figure{\numberline{3.2}{Visual detection comparisons of Faster R-CNN, YOLOv5, baseline YOLOv8 and the proposed improved model on unwashed eggs}}{\pageref{fig:visual_detection}}
+\l@figure{\numberline{3.3}{Online deployment and testing on the industrial egg conveyor line}}{\pageref{fig:online_deployment}}
+\l@figure{\numberline{3.4}{Visual detection results on active industrial conveyor with rotating eggs}}{\pageref{fig:production_detection}}
+\l@figure{\numberline{3.5}{Online detection speed stability curve across 400 continuous frames at 45 FPS}}{\pageref{fig:online_speed}}
+\makeatother
 
 \clearpage
 
@@ -411,7 +442,23 @@ At the network architectural level, the baseline YOLOv8 model is structurally op
 % LIST OF TABLES
 %=========================================================
 
-\listoftables
+\clearpage
+\markboth{List of Tables}{}
+\thispagestyle{fancy}
+
+\vspace*{-0.5cm}
+{\centering\fontsize{24}{28}\selectfont\bfseries List of Tables\par}
+\vspace{0.8cm}
+
+\makeatletter
+\l@table{\numberline{1.1}{Summary of related research in automated egg defect inspection}}{\pageref{tab:literature_survey}}
+\l@table{\numberline{2.1}{Dataset composition across partitions and defect categories}}{\pageref{tab:dataset_distribution}}
+\l@table{\numberline{2.2}{Computational hardware specifications and software environment}}{\pageref{tab:hardware_software}}
+\l@table{\numberline{3.1}{Ablation experiment results on test dataset}}{\pageref{tab:ablation_results}}
+\l@table{\numberline{3.2}{Model complexity and computational footprint comparison}}{\pageref{tab:model_complexity}}
+\l@table{\numberline{3.3}{Comparative performance benchmark across mainstream detectors}}{\pageref{tab:benchmark_comparison}}
+\l@table{\numberline{3.4}{Online factory inspection error rates across 106 production video frames}}{\pageref{tab:online_inspection_errors}}
+\makeatother
 
 \clearpage
 
@@ -420,8 +467,10 @@ At the network architectural level, the baseline YOLOv8 model is structurally op
 %=========================================================
 
 \pagenumbering{arabic}
+\setcounter{page}{1}
+
 %=========================================================
-% CHAPTER 1
+% CHAPTER 1: INTRODUCTION
 %=========================================================
 
 \chapter{Introduction}
@@ -440,62 +489,14 @@ Across commercial egg production and distribution pipelines, empirical surveys i
 
 The consequences of cracked eggshells are severe:
 \begin{enumerate}[label=\arabic*.]
-
     \item \textbf{Pathogen Infiltration and Food Safety Hazards:} A hairline fissure ruptures the physical protection provided by the shell and underlying testaceous membranes. This fissure provides an open entry corridor for environmental bacteria, including dangerous foodborne pathogens such as \textit{Salmonella enteritidis} and \textit{Escherichia coli}, presenting severe health risks to consumers.
-
     \item \textbf{Loss of Internal Freshness and Spoilage:} The crack accelerates evaporation of internal moisture and dissipation of carbon dioxide, thinning the thick albumen, flattening the yolk and precipitating premature spoilage.
-
     \item \textbf{Leakage and Secondary Batch Contamination:} In automated grading and packaging machinery, cracked eggs frequently rupture under mechanical handling. Liquid albumen and yolk leak onto conveyor rollers and surrounding intact eggs, fouling sorting machinery and contaminating entire batches of clean, marketable eggs.
-
 \end{enumerate}
-
-\section{Limitations of Existing Inspection Modalities}
-
-Historically, the identification of defective eggs has relied on manual visual inspection (manual candling), where trained workers visually observe eggs rolling over an illuminated light table. However, manual candling exhibits severe operational bottlenecks: extreme visual fatigue leading to declining accuracy after 20 to 30 minutes, subjective assessment, high labor costs and an inability to keep pace with modern conveyors processing over 360 eggs per minute.
-
-To eliminate dependence on human labor, automated non-destructive detection technologies have been investigated:
-\begin{itemize}
-
-    \item \textbf{Acoustic Resonance Methods:} Mechanical strikers tap the eggshell to capture acoustic vibrational response spectra. While effective in quiet laboratories, acoustic methods are vulnerable to severe ambient acoustic noise from factory conveyors and mechanical contact risks micro-fracturing thin shells.
-
-    \item \textbf{Traditional Computer Vision:} Classical algorithms employ grayscale thresholding (Otsu binarization) and edge filters. However, these methods fail on unwashed eggs where natural dust, feathers and dried manure streaks generate false edges that confuse thresholding rules.
-
-    \item \textbf{Existing Deep Learning Approaches:} Prior convolutional networks (such as Faster R-CNN) suffer from excessive latency ($\le 17$ FPS) that fails to meet production speeds ($\ge 30$ FPS). Crucially, existing vision rigs lack egg rotation mechanisms, capturing only a single perspective and leaving the underside shell surface uninspected.
-
-\end{itemize}
-
-\section{Problem Statement}
-
-Industrial egg processing facilities require an automated, real-time and non-destructive quality evaluation system capable of operating directly on high-speed conveyors carrying unwashed, moving eggs under actual factory conditions. The system must inspect the complete 360-degree surface of every egg to eliminate blind spots, operate at frame rates exceeding 30 frames per second (FPS) and maintain near-zero false negative rates for cracked eggs while minimizing false alarms on intact eggs carrying natural surface stains.
-
-\section{Objectives}
-
-The primary objective of this seminar study is to investigate, analyze and evaluate an industrial-grade, real-time cracked egg detection methodology based on an improved YOLOv8 architecture and a dual verification mechanism with triple classification granularity.
-
-The specific objectives are:
-\begin{enumerate}[label=\arabic*.]
-    \item To examine a multi-channel conveying device with rotating rollers that enables complete 360-degree surface image acquisition without blind spots.
-    \item To analyze the construction of an industrial dataset of unwashed eggs collected under dynamic production line conditions.
-    \item To investigate the triple classification granularity scheme (Intact Egg, Cracked Egg and Crack Region) for multi-scale supervision.
-    \item To study the structural enhancements incorporated into YOLOv8, including DCNv2, BiFPN, a P2 small target detection head and Wise-IoU v2 loss.
-    \item To formulate the redundant dual verification decision logic and evaluate its mathematical efficacy in minimizing compound miss rates.
-    \item To evaluate model performance through ablation experiments, benchmarks and live industrial conveyor line deployment.
-\end{enumerate}
-
-\section{Scope of the Report}
-
-The scope of this report covers the mechanical conveying design, optical acquisition setup, convolutional neural network architecture, dynamic loss formulation, ablation studies and factory production line deployment proposed by Sun et al. (2026). The experimental analysis is grounded on a dynamic production dataset of 3,222 unwashed egg images from Guangzhou Suiping Enterprise Co., Ltd., benchmarked within a standardized PyTorch environment on an NVIDIA GeForce RTX 3060 hardware platform.
-
-The remainder of this report is organized as follows: Chapter 2 details theoretical fundamentals of eggshell morphology, YOLOv8, DCNv2, BiFPN and loss functions; Chapter 3 reviews related literature; Chapter 4 presents the proposed methodology; Chapter 5 examines results and ablation findings; Chapter 6 discusses practical applications and deployment; and Chapter 7 outlines conclusions and future scope.
-%=========================================================
-% CHAPTER 2
-%=========================================================
-
-\chapter{Fundamentals}
 
 \section{Eggshell Morphology and Defect Manifestation}
 
-The avian eggshell is a specialized biological ceramic composite structure composed of approximately 95\% to 97\% crystalline calcium carbonate (calcite) embedded in an organic protein matrix. Morphologically, the shell consists of the inner and outer testaceous membranes, the mammillary layer, the palisade layer of columnar calcite crystals, the vertical crystal layer and the protective waxy cuticle. While the palisade layer imparts high compressive strength, the brittle calcite matrix is vulnerable to flexural tensile stresses and fracture propagation under localized impacts.
+Morphologically, the shell consists of the inner and outer testaceous membranes, the mammillary layer, the palisade layer of columnar calcite crystals, the vertical crystal layer and the protective waxy cuticle. While the palisade layer imparts high compressive strength, the brittle calcite matrix is vulnerable to flexural tensile stresses and fracture propagation under localized impacts.
 
 Eggshell defects manifest in several morphologies:
 \begin{itemize}
@@ -506,93 +507,26 @@ Eggshell defects manifest in several morphologies:
 
 A critical challenge in automated vision is distinguishing genuine hairline cracks from non-defective surface artifacts present on unwashed eggs, such as pigmentation speckles, dust particles, feather residues and dried manure streaks.
 
-\section{Object Detection and the YOLOv8 Architecture}
+\section{Limitations of Existing Inspection Modalities}
 
-Object detection requires simultaneously classifying objects and predicting their spatial bounding boxes. Modern deep detectors are categorized into two-stage and single-stage frameworks:
+Historically, the identification of defective eggs has relied on manual visual inspection (manual candling), where trained workers visually observe eggs rolling over an illuminated light table. However, manual candling exhibits severe operational bottlenecks: extreme visual fatigue leading to declining accuracy after 20 to 30 minutes, subjective assessment, high labor costs and an inability to keep pace with modern conveyors processing over 360 eggs per minute.
+
+To eliminate dependence on human labor, automated non-destructive detection technologies have been investigated:
 \begin{itemize}
-    \item \textbf{Two-Stage Detectors (e.g., Faster R-CNN):} Utilize a Region Proposal Network (RPN) followed by RoI pooling. While accurate, their multi-stage pipeline introduces substantial latency (10 to 18 FPS), precluding high-speed conveyor sorting.
-    \item \textbf{Single-Stage Detectors (e.g., YOLO):} Frame detection as a single-pass regression problem, predicting bounding boxes and class probabilities simultaneously across a spatial grid.
+    \item \textbf{Acoustic Resonance Methods:} Mechanical strikers tap the eggshell to capture acoustic vibrational response spectra. While effective in quiet laboratories, acoustic methods are vulnerable to severe ambient acoustic noise from factory conveyors and mechanical contact risks micro-fracturing thin shells.
+    \item \textbf{Traditional Computer Vision:} Classical algorithms employ grayscale thresholding (Otsu binarization) and edge filters. However, these methods fail on unwashed eggs where natural dust, feathers and dried manure streaks generate false edges that confuse thresholding rules.
+    \item \textbf{Existing Deep Learning Approaches:} Prior convolutional networks (such as Faster R-CNN) suffer from excessive latency ($\le 17$ FPS) that fails to meet production speeds ($\ge 30$ FPS). Crucially, existing vision rigs lack egg rotation mechanisms, capturing only a single perspective and leaving the underside shell surface uninspected.
 \end{itemize}
 
-YOLOv8 represents a modern state-of-the-art single-stage detector. Its architecture features a CSPDarknet backbone with C2f (Cross Stage Partial with two convolutions) modules, an SPPF (Spatial Pyramid Pooling Fast) pooling block and an anchor-free decoupled detection head that separates classification from bounding box regression. This anchor-free design eliminates manual anchor tuning and improves adaptation to objects of arbitrary aspect ratios.
-
-\section{Deformable Convolutional Networks (DCNv2)}
-
-Standard 2D convolution operates over a fixed regular sampling grid. For input feature map $X$ and kernel weights $w_k$, output $Y$ at coordinate $q$ is formalized as:
-\begin{equation}
-Y(q) = \sum_{k=1}^{K} w_k X(q + q_k)
-\end{equation}
-where $K$ is the kernel size (for $3 \times 3$, $K=9$) and $q_k$ represents fixed regular grid offsets. This rigid structure cannot conform to winding, irregular crack paths, causing sampling points to fall onto healthy shell regions.
-
-Deformable Convolution v2 (DCNv2) breaks this limitation by adding learnable 2D spatial coordinate offsets $\Delta q_k$ and dynamic feature modulation scalars $\Delta m_k \in [0, 1]$:
-\begin{equation}
-Y(q) = \sum_{k=1}^{K} w_k X(q + q_k + \Delta q_k) \Delta m_k
-\end{equation}
-where $\Delta q_k$ dynamically reshapes the receptive field along the winding crack contour and $\Delta m_k$ modulates feature amplitude, suppressing non-crack shell textures.
-
-\section{Multi-Scale Feature Fusion and BiFPN}
-
-Feature Pyramid Networks resolve the trade-off between shallow spatial resolution and deep semantic abstraction. The baseline YOLOv8 utilizes PANet, which aggregates features using top-down and bottom-up pathways with equal weights.
-
-The Weighted Bidirectional Feature Pyramid Network (BiFPN) improves multi-scale fusion by eliminating single-edge nodes, introducing cross-scale residual skip connections and applying fast normalized weighted fusion:
-\begin{equation}
-O = \sum_{i} \frac{w_i}{\epsilon + \sum_{j} w_j} \cdot I_i
-\end{equation}
-where $I_i$ is the input feature map at scale $i$, $w_i \ge 0$ is a learnable weight and $\epsilon = 0.0001$ ensures numerical stability. BiFPN dynamically balances shallow spatial details with deep semantics, enhancing resilience to shifting illumination.
-
-\section{P2 Small Target Detection Head}
-
-Baseline YOLOv8 downsamples input images ($640 \times 640$) by a factor of 32, generating detection heads at $80 \times 80$ (P3), $40 \times 40$ (P4) and $20 \times 20$ (P5). The smallest P3 head possesses an $8 \times 8$ pixel receptive field. Micro-cracks spanning fewer than 8 pixels lose high-frequency textural cues during downsampling.
-
-Integrating an additional P2 small target detection head operating on a $160 \times 160$ feature map (stride 4, $4 \times 4$ pixel receptive field) preserves early-stage spatial gradients, dramatically boosting sensitivity to minute hairline fractures.
-
-\section{Wise-IoU v2 Dynamic Loss Function}
-
-Conventional bounding box regression losses (such as CIoU) enforce static penalties that disproportionately penalize low-quality outlier samples. Wise-IoU v2 (WIoUv2) introduces a dynamic non-monotonic focusing mechanism governed by the outlier degree $\beta$:
-\begin{equation}
-\beta = \frac{L_{\text{IoU}}}{\overline{L_{\text{IoU}}}} \in [0, +\infty)
-\end{equation}
-where $\overline{L_{\text{IoU}}}$ is the running moving average of the IoU loss.
-
-The WIoUv2 loss is formalized as:
-\begin{equation}
-L_{\text{WIoUv2}} = L_{\text{IoU}}^{\gamma*} L_{\text{WIoUv1}}, \quad \gamma > 0
-\end{equation}
-where $L_{\text{IoU}}^{\gamma*} = (L_{\text{IoU}} / \overline{L_{\text{IoU}}})^\gamma$ serves as the dynamic non-monotonic focusing factor and $L_{\text{WIoUv1}}$ incorporates center distance penalties. WIoUv2 reduces gradient penalties on extreme outliers while focusing updates on moderately challenging samples.
-
-\section{Dual Verification and Multi-Granularity Decision Theory}
-
-Binary classification (intact versus cracked) suffers from single-point failure: a subtle crack that misses the global threshold results in an undetected broken egg. The proposed framework establishes triple classification granularity:
-\begin{itemize}
-    \item \textbf{Category 1 (Intact Egg):} Holistic undamaged egg body.
-    \item \textbf{Category 2 (Cracked Egg):} Holistic egg body displaying shell rupture.
-    \item \textbf{Category 3 (Crack Region):} Tightly bounded localized fracture zone.
-\end{itemize}
-
-Under dual verification logic, an egg is declared damaged if Category 2 OR Category 3 is detected. Assuming the error rates of the macro-scale classifier ($P(\text{Miss}_{\text{Egg}})$) and region detector ($P(\text{Miss}_{\text{Region}})$) are statistically decoupled, the compound miss probability is:
-\begin{equation}
-P(\text{Miss}_{\text{Overall}}) = P(\text{Miss}_{\text{Egg}}) \times P(\text{Miss}_{\text{Region}})
-\end{equation}
-This product drives compound defect escape rates down by an order of magnitude.
-%=========================================================
-% CHAPTER 3
-%=========================================================
-
-\chapter{Literature Survey}
-
-\section{Traditional Acoustic and Optical Methods}
+\section{Literature Survey and Prior Work}
 
 Automated quality inspection of eggshells has evolved through acoustic and optical processing techniques. Sun et al. (2020) investigated acoustic resonance inspection for hen and duck eggs using correlation analysis of impact sound waves. While intact shells displayed symmetric resonant peaks, factory background noise and the risk of striker damage limited industrial adoption. Balci et al. (2026) converted acoustic signals into spectrograms for CNN classification, yet acoustic interference from conveyor motors remained an obstacle.
 
 In optical inspection, Liang et al. (2020) developed an integrated vision system utilizing histogram thresholding and Otsu segmentation on static egg images, achieving 98.18\% accuracy. However, hand-crafted thresholding failed on unwashed eggs where natural dirt, feathers and dried manure generated high-contrast edges, resulting in unacceptably high false alarm rates.
 
-\section{Two-Stage Deep Learning Architectures}
-
 To improve defect feature extraction, Datta et al. (2019) applied Faster R-CNN with a ResNet backbone to chicken eggshells, achieving a 75\% mAP on severe cracks. Despite precise localization, the Region Proposal Network generated significant latency ($\approx 17$ FPS), falling short of industrial line speeds ($\ge 30$ FPS). Furthermore, the model struggled to resolve fine hairline cracks.
 
 Turkoglu (2021) proposed a hybrid CNN-BiLSTM network for egg surface defect detection, attaining 96.3\% accuracy. Nevertheless, the sequential processing of recurrent LSTM units introduced computational bottlenecks that prevented high-speed parallel GPU inference on dynamic conveyor streams.
-
-\section{Single-Stage Detectors and YOLO Adaptations in Poultry}
 
 Botta et al. (2022) trained deep CNNs on static chicken egg images, reaching 95.38\% accuracy. However, their static imaging setup lacked egg rotation, leaving cracks on the bottom hemisphere entirely uninspected.
 
@@ -612,22 +546,22 @@ Table~\ref{tab:literature_survey} summarizes prominent related studies in egg de
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.15}
 \small
-\begin{tabular}{p{2.8cm} p{2.6cm} p{2.4cm} p{1.8cm} p{4.6cm}}
-\toprule
+\begin{tabular}{|p{2.8cm}|p{2.6cm}|p{2.4cm}|p{1.8cm}|p{4.6cm}|}
+\hline
 \textbf{Study and Year} & \textbf{Methodology} & \textbf{Dataset} & \textbf{Result} & \textbf{Limitations} \\
-\midrule
+\hline
 Liang et al. (2020) & Otsu segmentation and thresholding & Static lab egg images & 98.18\% acc. & Sensitive to lighting; fails on unwashed surface dirt. \\
-\midrule
+\hline
 Datta et al. (2019) & Faster R-CNN with ResNet backbone & Static chicken eggshells & 75\% mAP & High computational cost; 17 FPS latency; misses hairline cracks. \\
-\midrule
+\hline
 Turkoglu (2021) & Hybrid CNN and Bidirectional LSTM & Egg surface defect dataset & 96.3\% acc. & Heavy parameter size; sequential recurrent latency limits speed. \\
-\midrule
+\hline
 Botta et al. (2022) & Deep Convolutional Neural Network & Static chicken egg images & 95.38\% acc. & Static setup; lacks egg rotation, leaving bottom uninspected. \\
-\midrule
+\hline
 Yin et al. (2024) & YOLOv5l with Ghost modules and ECA & Cracked duck egg dataset & 93.8\% acc. & Tested only on duck eggs; binary labeling misses micro-cracks. \\
-\midrule
+\hline
 Huang et al. (2023) & YOLOv5 with BiFPN and CA attention & Unwashed egg video streams & 96.4\% acc. & Lacks dual verification of localized crack zones; no rotation. \\
-\bottomrule
+\hline
 \end{tabular}
 \end{table}
 
@@ -643,59 +577,70 @@ A critical synthesis of the literature identifies key research gaps:
 \end{enumerate}
 
 To overcome these limitations, this seminar investigates the improved YOLOv8 framework with dual verification and triple classification granularity formulated by Sun et al. (2026).
+
+\section{Problem Statement}
+
+Industrial egg processing facilities require an automated, real-time and non-destructive quality evaluation system capable of operating directly on high-speed conveyors carrying unwashed, moving eggs under actual factory conditions. The system must inspect the complete 360-degree surface of every egg to eliminate blind spots, operate at frame rates exceeding 30 frames per second (FPS) and maintain near-zero false negative rates for cracked eggs while minimizing false alarms on intact eggs carrying natural surface stains.
+
+\section{Objectives}
+
+The primary objective of this seminar study is to investigate, analyze and evaluate an industrial-grade, real-time cracked egg detection methodology based on an improved YOLOv8 architecture and a dual verification mechanism with triple classification granularity.
+
+The specific objectives are:
+\begin{enumerate}[label=\arabic*.]
+    \item To examine a multi-channel conveying device with rotating rollers that enables complete 360-degree surface image acquisition without blind spots.
+    \item To analyze the construction of an industrial dataset of unwashed eggs collected under dynamic production line conditions.
+    \item To investigate the triple classification granularity scheme (Intact Egg, Cracked Egg and Crack Region) for multi-scale supervision.
+    \item To study the structural enhancements incorporated into YOLOv8, including DCNv2, BiFPN, a P2 small target detection head and Wise-IoU v2 loss.
+    \item To formulate the redundant dual verification decision logic and evaluate its mathematical efficacy in minimizing compound miss rates.
+    \item To evaluate model performance through ablation experiments, benchmarks and live industrial conveyor line deployment.
+\end{enumerate}
+
+\section{Scope and Organization of the Report}
+
+The scope of this report covers the mechanical conveying design, optical acquisition setup, convolutional neural network architecture, dynamic loss formulation, ablation studies and factory production line deployment proposed by Sun et al. (2026). The experimental analysis is grounded on a dynamic production dataset of 3,222 unwashed egg images from Guangzhou Suiping Enterprise Co., Ltd., benchmarked within a standardized PyTorch environment on an NVIDIA GeForce RTX 3060 hardware platform.
+
+The remainder of this report is organized into four subsequent chapters matching the structural divisions of the base research: Chapter 2 details Materials and Methods, covering mechanical conveyance, vision acquisition, dataset composition, YOLOv8 architectural refinements, dual verification and experimental protocols; Chapter 3 presents Results and Analysis, covering ablation experiments, computational complexity, model benchmarks, PR dynamics and live factory trials; Chapter 4 provides an in-depth Discussion on speed-accuracy trade-offs, surface contaminants, egg varieties, reticular micro-cracks and industrial edge deployment; and Chapter 5 concludes the report with research conclusions and future scope.
+
 %=========================================================
-% CHAPTER 4
+% CHAPTER 2: MATERIALS AND METHODS
 %=========================================================
 
-\chapter{Proposed Methodology}
+\chapter{Materials and Methods}
 
-\section{System Overview and Architecture Pipeline}
+\section{Multi-Channel Egg Conveying Device and Mechanical Design}
 
-The proposed real-time detection system integrates mechanical conveying, synchronized optical acquisition, customized deep convolutional network inference and dual verification decision logic into a continuous industrial pipeline. Unwashed eggs are conveyed along six parallel channels with continuous axial rotation, imaged under uniform diffuse illumination by an overhead CCD camera, processed by an improved YOLOv8 detector and evaluated through dual verification logic to trigger automated sorting gates.
+To inspect the complete surface of moving eggs in real time, the experimental framework utilizes an industrial egg conveying device featuring parallel inspection channels and rotating spools. The mechanical assembly incorporates six parallel channels, achieving an aggregate processing throughput of 360 eggs per minute at standard line speeds.
 
-\section{Egg Conveying Mechanism and Rotational Kinematics}
-
-To eliminate uninspected surface blind spots, the system employs a multi-channel roller conveying mechanism, illustrated in Figure~\ref{fig:conveying_device}. The machine vision hardware configuration is depicted in Figure~\ref{fig:vision_system}.
+Figure~\ref{fig:conveyor_device} illustrates the mechanical schematic of the conveying device.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.62\textwidth]{figure1_egg_conveying_device.jpg}
-    \caption{Multi-channel egg conveying device with parallel transport tracks and rotating rollers}
-    \label{fig:conveying_device}
+    \includegraphics[width=0.65\textwidth]{figure1_egg_conveying_device.jpg}
+    \caption{Structural schematic and operational overview of the egg conveying device}
+    \label{fig:conveyor_device}
 \end{figure}
 
+The conveying mechanism consists of drive chains, transmission gears, bearing blocks and grooved rotating rollers. As eggs transition from the feeding hopper onto the conveyor, each egg rests between two adjacent contoured rollers. The conveyor mechanism imparts dual kinematic motion: forward translational motion along the conveyor line and continuous axial rotation around each egg's major axis. By the time an egg traverses the optical imaging zone, it completes at least one full 360-degree rotation, presenting its entire circumferential shell surface to the overhead machine vision camera and eliminating geometric occlusion blind spots.
+
+\section{Machine Vision Image Acquisition Setup}
+
+The optical acquisition rig is integrated directly above the six-channel conveyor bed within a light-isolated inspection hood. Figure~\ref{fig:vision_system} displays the complete machine vision image acquisition architecture.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.62\textwidth]{figure2_machine_vision_system.jpg}
-    \caption{Machine vision system layout illustrating the overhead CCD camera, LED diffuse lighting box, processing unit and roller conveyor}
+    \includegraphics[width=0.92\textwidth]{figure2_machine_vision_system.jpg}
+    \caption{Machine vision system architecture and industrial camera installation}
     \label{fig:vision_system}
 \end{figure}
 
-The conveying device features six parallel transport channels driven by an industrial motor, with each channel carrying 60 eggs per minute for a total system throughput of 360 eggs per minute. The conveying bed consists of cylindrical rubber rollers. As the conveyor chain translates linearly forward, stationary lower guide rails force the rollers to rotate around their central axes. Consequently, eggs supported between rollers perform synchronized linear translation and continuous 360-degree axial rotation. The transit speed is calibrated so that every egg completes at least one full 360-degree rotation while traversing the camera's field of view.
+The vision system comprises an industrial charge-coupled device (CCD) area-scan camera paired with a low-distortion fixed-focal-length optical lens. Illumination is provided by a high-uniformity diffuse white LED planar light box positioned above the rollers. The LED array operates with high-frequency pulse-width modulation to eliminate camera rolling-shutter flicker. The optical axis of the camera is aligned perpendicular to the conveyor plane, capturing high-resolution planar color frames ($640 \times 640$ pixels) covering all six lanes simultaneously.
 
-The overhead industrial CCD color camera is mounted with its optical axis perpendicular to the egg motion plane, eliminating perspective distortion across all six channels. A diffuse white LED lighting box encloses the inspection zone, delivering uniform shadowless illumination that eliminates specular reflection highlights on the curved glossy shells.
+\section{Image Dataset Acquisition and Augmentation}
 
-\section{Industrial Dataset Acquisition and Annotation}
+The image dataset was collected on a live industrial egg processing line at Guangzhou Suiping Enterprise Co., Ltd. Unlike laboratory datasets composed of pre-washed, sanitized eggs, the eggs utilized in this study were collected directly from laying hen facilities without preliminary washing. Consequently, the eggshells naturally carried varying amounts of surface contaminants, including fine dust particles, feather fragments and dried manure streaks, reflecting genuine commercial conditions.
 
-To ensure generalization under real-world factory conditions, dynamic video frames of unwashed chicken eggs were captured on the sorting line at Guangzhou Suiping Enterprise Co., Ltd. The collection yielded 628 raw images containing intact and cracked eggs across diverse positions, natural backgrounds and ambient lighting levels. Cracked eggs were deliberately included to maintain balanced positive and negative samples.
-
-Using LabelImg, domain experts annotated images across three distinct categories:
-\begin{itemize}
-    \item \textbf{Category 1 (Intact Egg):} Bounding box enclosing the normal, undamaged egg body.
-    \item \textbf{Category 2 (Cracked Egg):} Bounding box enclosing an egg body displaying shell rupture.
-    \item \textbf{Category 3 (Crack Region):} Bounding box tightly fitted around the localized fracture zone.
-\end{itemize}
-
-Figure~\ref{fig:classification_categories} illustrates these three classification categories.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\textwidth]{classificationCategories.png}
-    \caption{Visual illustration of triple classification granularity: Intact Egg, Cracked Egg and Crack Region}
-    \label{fig:classification_categories}
-\end{figure}
-
-The annotated dataset was partitioned into training (377 images), validation (126 images) and test (125 images) sets in a 6:2:2 ratio. Random cropping and horizontal/vertical flipping (50\% probability) expanded the training set to 2,972 images. The total dataset comprises 3,222 images containing 7,611 intact eggs, 2,711 cracked eggs and 2,935 localized crack areas. Table~\ref{tab:dataset_distribution} details the composition.
+Dynamic video sequences of rolling eggs were recorded under production conditions and sliced into discrete frames at regular intervals. Shell cracks were annotated using LabelMe by poultry inspection experts under three distinct target classes. The dataset contains 3,222 high-resolution images, partitioned into training, validation and testing subsets in an approximate ratio of 92:4:4. Table~\ref{tab:dataset_distribution} details the composition of the dataset.
 
 \begin{table}[H]
 \centering
@@ -705,109 +650,188 @@ The annotated dataset was partitioned into training (377 images), validation (12
 \setlength{\tabcolsep}{6pt}
 \renewcommand{\arraystretch}{1.15}
 \small
-\begin{tabular}{lcccc}
-\toprule
+\begin{tabular}{|l|c|c|c|c|}
+\hline
 \textbf{Partition} & \textbf{Images} & \textbf{Intact Eggs (Cat 1)} & \textbf{Cracked Eggs (Cat 2)} & \textbf{Crack Regions (Cat 3)} \\
-\midrule
+\hline
 Training Set & 2,972 & 7,015 & 2,501 & 2,708 \\
 Validation Set & 126 & 298 & 105 & 114 \\
 Test Set & 125 & 298 & 105 & 113 \\
-\midrule
+\hline
 \textbf{Total} & \textbf{3,222} & \textbf{7,611} & \textbf{2,711} & \textbf{2,935} \\
-\bottomrule
+\hline
 \end{tabular}
 \end{table}
 
-\section{Improved YOLOv8 Network Architecture}
+Data augmentation strategies, including random horizontal flips, mosaic synthesis, HSV color space jittering and random affine transformations, were applied during offline training to expand sample diversity and prevent overfitting.
 
-To detect microscopic, tortuous hairline cracks on unwashed eggs, four structural modifications were introduced to baseline YOLOv8: embedding DCNv2 into the backbone, replacing PANet with BiFPN, adding a P2 small target detection head and adopting WIoUv2 dynamic loss. Figure~\ref{fig:yolov8_arch} displays the complete network pipeline.
+\section{Triple Classification Granularity Paradigm}
+
+Conventional agricultural defect inspection frameworks formulate egg grading as a binary classification problem: classifying each candidate region simply as intact or cracked. However, binary classification exhibits inherent vulnerabilities in dynamic factory environments. A small hairline crack on an unwashed shell may produce subtle feature activation that falls below the global decision threshold, leading to a missed detection.
+
+To address this limitation, the proposed method establishes a triple classification granularity framework, illustrated in Figure~\ref{fig:categories}:
+\begin{itemize}
+    \item \textbf{Category 1 (Intact Egg):} The entire egg body exhibiting a continuous, structurally unbroken shell without fractures or punctures.
+    \item \textbf{Category 2 (Cracked Egg):} The entire egg body containing one or more visible shell cracks, representing an egg-level macro-defect label.
+    \item \textbf{Category 3 (Crack Region):} A tight bounding box tightly circumscribing the localized fracture zone, micro-crack line or puncture epicenter, representing a micro-level defect label.
+\end{itemize}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth]{figure3_improved_yolov8_architecture_1.jpg}
-    \caption{Improved YOLOv8 network architecture pipeline for cracked egg detection}
+    \includegraphics[width=0.78\textwidth]{classificationCategories.png}
+    \caption{Triple classification granularity scheme: Intact Egg, Cracked Egg and Crack Region}
+    \label{fig:categories}
+\end{figure}
+
+This multi-granularity formulation provides simultaneous multi-scale supervision during backpropagation. The network learns both holistic egg body representations and high-frequency local crack edge patterns, establishing redundant feature pathways.
+
+\section{Baseline YOLOv8 Architecture and Detected Limitations}
+
+YOLOv8 represents a cutting-edge, single-stage object detector known for high speed and accuracy. It features a CSPDarknet backbone with C2f (Cross Stage Partial with two convolutions) modules, an SPPF (Spatial Pyramid Pooling Fast) block and an anchor-free decoupled detection head that independently predicts bounding box coordinates and class probability distributions.
+
+Despite its general-purpose effectiveness, standard YOLOv8 suffers from structural shortcomings when applied to hairline crack inspection on unwashed eggs:
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Rigid Convolutional Sampling:} Standard $3 \times 3$ convolutional kernels operate over fixed rectangular grids. Hairline cracks follow jagged, tortuous trajectories, causing rigid kernels to sample irrelevant background shell texture and diluting crack gradients.
+    \item \textbf{Loss of Micro-Crack Information:} Standard YOLOv8 downsamples inputs by $32\times$, producing detection heads at P3 ($80 \times 80$), P4 ($40 \times 40$) and P5 ($20 \times 20$). Minute hairline cracks occupying widths under 0.1 mm vanish across successive pooling layers.
+    \item \textbf{Static IoU Loss Weighting:} The default CIoU loss applies static geometric penalties that over-penalize extreme low-quality outlier bounding boxes while insufficiently penalizing hard, medium-quality crack candidates.
+\end{enumerate}
+
+\section{Proposed Improved YOLOv8 Network Architecture}
+
+To overcome these structural limitations, four key enhancements were integrated into the YOLOv8 architecture: embedding Deformable Convolution v2 (DCNv2) into the backbone, incorporating a Weighted Bidirectional Feature Pyramid Network (BiFPN), adding a dedicated P2 small target detection head and adopting Wise-IoU v2 (WIoUv2) loss.
+
+Figure~\ref{fig:yolov8_arch} displays the complete architectural layout of the proposed improved YOLOv8 network.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth]{figure3_improved_yolov8_architecture_1.jpg}
+    \caption{Detailed architectural layout of the improved YOLOv8 framework}
     \label{fig:yolov8_arch}
 \end{figure}
 
-\subsection{Backbone Enhancement with DCNv2}
+The network processes $640 \times 640$ RGB frames. The backbone extracts feature maps at progressive strides, passing enriched feature hierarchies to the multi-scale BiFPN neck and four decoupled detection heads (P2, P3, P4, P5).
 
-Standard convolutional layers in the YOLOv8 backbone utilize rigid $3 \times 3$ square kernels that dilute crack features with healthy shell background pixels. Standard convolutions in deep backbone layers are replaced with Deformable Convolution v2 (DCNv2). Figure~\ref{fig:dcnv2_sampling} compares normal convolution, DCNv1 and DCNv2 sampling strategies.
+\section{Deformable Convolution v2 (DCNv2) Module}
+
+Standard 2D convolution evaluates feature maps across a rigid rectangular grid $\mathcal{R}$. For a $3 \times 3$ kernel, the regular sampling grid is defined as:
+\begin{equation}
+\mathcal{R} = \{(-1,-1), (-1,0), (-1,1), (0,-1), (0,0), (0,1), (1,-1), (1,0), (1,1)\}
+\end{equation}
+The output feature vector $Y$ at spatial location $p_0$ is computed as:
+\begin{equation}
+Y(p_0) = \sum_{p_n \in \mathcal{R}} w(p_n) \cdot X(p_0 + p_n)
+\end{equation}
+where $X$ is the input feature map and $w(p_n)$ represents kernel weight parameters.
+
+Because crack paths follow winding, irregular biological contours, rigid sampling points often fall onto intact shell surfaces or adjacent dirt particles. Deformable Convolution v2 (DCNv2) introduces learnable 2D spatial coordinate offsets $\Delta p_n$ and modulation scalar values $\Delta m_n \in [0, 1]$:
+\begin{equation}
+Y(p_0) = \sum_{p_n \in \mathcal{R}} w(p_n) \cdot X(p_0 + p_n + \Delta p_n) \cdot \Delta m_n
+\end{equation}
+where $\Delta p_n$ allows the sampling grid to freely deform along the curvilinear contour of the crack and $\Delta m_n$ modulates feature amplitude, suppressing non-crack shell textures.
+
+Figure~\ref{fig:dcnv2_sampling} compares standard rectangular convolution sampling grids with deformable sampling point distributions along irregular crack fissures.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.72\textwidth]{figure4_dcnv2_sampling_comparison.jpg}
-    \caption{Sampling grid comparison of Normal Conv, DCNv1 and DCNv2}
+    \includegraphics[width=0.75\textwidth]{figure4_dcnv2_sampling_comparison.jpg}
+    \caption{Comparison of regular convolution sampling and DCNv2 deformable sampling on irregular cracks}
     \label{fig:dcnv2_sampling}
 \end{figure}
 
-DCNv2 adds learnable 2D spatial offsets $\Delta q_k$ and modulation scalars $\Delta m_k \in [0, 1]$:
-\begin{equation}
-Y(q) = \sum_{k=1}^{K} w_k X(q + q_k + \Delta q_k) \Delta m_k
-\end{equation}
-This allows receptive fields to stretch along winding fracture contours while suppressing non-crack shell textures.
+The offsets $\Delta p_n$ and modulation scalars $\Delta m_n$ are generated by applying a lightweight parallel convolution layer over the input features, enabling end-to-end differentiable training.
 
-\subsection{BiFPN Multi-Scale Feature Fusion}
+\section{Weighted BiFPN Neck and P2 Small Target Detection Head}
 
-The default PANet neck in YOLOv8 treats all input scales equally. BiFPN replaces PANet by eliminating single-edge nodes, introducing cross-scale residual skip connections and applying fast normalized weighted fusion:
-\begin{equation}
-O = \sum_{i} \frac{w_i}{\epsilon + \sum_{j} w_j} \cdot I_i
-\end{equation}
-Figure~\ref{fig:bifpn_structure} compares FPN, PANet and BiFPN topologies. BiFPN dynamically balances shallow spatial details with deep semantics, improving resilience to lighting shifts.
+In the baseline YOLOv8, feature fusion is handled by the PANet architecture, which aggregates multi-scale features through sequential top-down and bottom-up pathways using uniform unweighted addition. However, features from different pyramid levels contribute unequally to defect detection: shallow layers carry high-resolution spatial details essential for micro-cracks, while deep layers carry rich semantic context.
+
+The Weighted Bidirectional Feature Pyramid Network (BiFPN) optimizes multi-scale fusion through three key mechanisms:
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Node Pruning:} Nodes with only a single input edge are eliminated, as they contribute minimal feature transformation while adding computational cost.
+    \item \textbf{Cross-Scale Residual Connections:} Direct residual connections are added between original input nodes and output nodes at the same scale, preserving shallow spatial cues.
+    \item \textbf{Fast Normalized Feature Fusion:} Features are merged using learnable normalized weights:
+    \begin{equation}
+    O = \sum_{i} \frac{w_i}{\epsilon + \sum_{j} w_j} \cdot I_i
+    \end{equation}
+    where $w_i \ge 0$ is a learnable scalar weight enforced via ReLU activation, $I_i$ is the feature map at pathway $i$ and $\epsilon = 0.0001$ prevents numerical instability.
+\end{enumerate}
+
+Figure~\ref{fig:bifpn_structure} compares the architectural topologies of FPN, PANet and the Weighted BiFPN.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.78\textwidth]{figure5_fpn_panet_bifpn_structure.jpg}
-    \caption{Structural comparison of FPN, PANet and BiFPN multi-scale fusion}
+    \includegraphics[width=0.95\textwidth]{figure5_fpn_panet_bifpn_structure.jpg}
+    \caption{Architectural comparison of multi-scale feature fusion structures: FPN, PANet and BiFPN}
     \label{fig:bifpn_structure}
 \end{figure}
 
-\subsection{Small Target Detection Head and WIoUv2 Loss}
+To further preserve micro-crack details, a dedicated P2 small target detection head is added to the network. Operating on a $160 \times 160$ feature map (stride 4, $4 \times 4$ pixel receptive field), this head captures sub-millimeter fissure boundaries that would otherwise be obliterated by the stride-32 downsampling of standard YOLOv8.
 
-The baseline P3 detection head ($80 \times 80$) possesses an $8 \times 8$ pixel receptive field, causing sub-8-pixel cracks to disappear during downsampling. A 4th detection head operating on a $160 \times 160$ feature map (P2, stride 4, $4 \times 4$ px receptive field) is added to preserve early spatial gradients.
+\section{Wise-IoU v2 Dynamic Bounding Box Loss Formulation}
 
-To balance gradients across bounding box candidates, Wise-IoU v2 (WIoUv2) loss is adopted:
+Bounding box regression accuracy directly determines crack localization precision. The conventional CIoU loss used in YOLOv8 considers bounding box overlap, center point distance and aspect ratio consistency. However, CIoU enforces static geometric penalties that disproportionately penalize low-quality outlier bounding boxes caused by ambiguous crack shadows or surface dirt.
+
+Wise-IoU v2 (WIoUv2) introduces a dynamic non-monotonic focusing mechanism based on an outlier degree metric $\beta$:
 \begin{equation}
-L_{\text{WIoUv2}} = \left(\frac{L_{\text{IoU}}}{\overline{L_{\text{IoU}}}}\right)^\gamma L_{\text{WIoUv1}}, \quad \gamma > 0
+\beta = \frac{L_{\text{IoU}}}{\overline{L_{\text{IoU}}}} \in [0, +\infty)
 \end{equation}
-WIoUv2 reduces penalty gradients on extreme low-quality outliers while focusing updates on high-potential candidates.
+where $L_{\text{IoU}} = 1 - \text{IoU}$ and $\overline{L_{\text{IoU}}}$ is the running exponential moving average of the IoU loss across batches.
 
-\section{Dual Verification Decision-Making Mechanism}
-
-Under the triple classification granularity scheme, the detector simultaneously outputs bounding box predictions for Category 1 ($C_1$), Category 2 ($C_2$) and Category 3 ($C_3$). The dual verification decision rule identifies an egg as damaged if:
+The outlier degree $\beta$ quantifies sample difficulty: a small $\beta$ indicates an easy, high-quality anchor, while a large $\beta$ indicates a severe low-quality outlier. WIoUv2 constructs a dynamic non-monotonic focusing coefficient $r$:
 \begin{equation}
-\text{Status} = \begin{cases}
-\text{Cracked (Reject)} & \text{if } (C_2 \ge 1) \lor (C_3 \ge 1) \\
-\text{Intact (Accept)} & \text{if } (C_1 \ge 1) \land (C_2 = 0) \land (C_3 = 0)
-\end{cases}
+r = \frac{\beta}{\delta \alpha^{\beta - \delta}}
 \end{equation}
+where $\alpha$ and $\delta$ are hyperparameter constants governing gradient distribution.
 
-A defective egg is missed only if both detection branches fail simultaneously:
+The total WIoUv2 bounding box loss is formulated as:
 \begin{equation}
-P(\text{Miss}_{\text{Overall}}) = P(\text{Miss}_{\text{Egg}}) \times P(\text{Miss}_{\text{Region}})
+L_{\text{WIoUv2}} = r \cdot L_{\text{WIoUv1}} = r \cdot \mathcal{R}_{\text{WIoU}} \cdot L_{\text{IoU}}
 \end{equation}
-Because both individual miss rates are small percentages, their compound product drastically lowers missed defect escapes.
+where $\mathcal{R}_{\text{WIoU}} \in [1, e)$ is the distance penalty term:
+\begin{equation}
+\mathcal{R}_{\text{WIoU}} = \exp\left( \frac{(x - x_{gt})^2 + (y - y_{gt})^2}{(W_g)^2 + (H_g)^2} \right)
+\end{equation}
+Here, $(x, y)$ and $(x_{gt}, y_{gt})$ denote predicted and ground-truth bounding box center coordinates and $W_g, H_g$ represent the width and height of the smallest enclosing bounding box. By assigning smaller gradient weights to extreme outliers and prioritizing moderately challenging candidates, WIoUv2 achieves superior bounding box alignment on irregular hairline cracks.
 
-\section{Model Training Workflow}
+\section{Dual Verification Mechanism and Redundant Decision Logic}
 
-Figure~\ref{fig:training_schematic} illustrates the end-to-end model training, validation and deployment workflow.
+In high-speed commercial sorting lines, false negatives (escaped cracked eggs) cause batch-wide bacterial contamination, while false positives (discarded intact eggs) inflict direct financial losses. To achieve near-zero escape rates without excessive false alarms, the framework introduces a redundant dual verification decision mechanism operating on the triple granularity outputs.
+
+Let $D_1, D_2, D_3$ denote the binary detection outcomes for Category 1 (Intact Egg), Category 2 (Cracked Egg) and Category 3 (Crack Region) respectively within the spatial bounding volume of an individual egg pocket. The final sorting decision is governed by two complementary rules:
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Cracked Egg Classification Rule (Union Logic):} An egg is classified as cracked if either the holistic cracked egg detector fires or the localized crack region detector fires:
+    \begin{equation}
+    \text{Status} = \text{Cracked} \iff (D_2 = 1) \lor (D_3 = 1)
+    \end{equation}
+    \item \textbf{Intact Egg Classification Rule (Intersection Logic):} An egg is classified as intact if and only if Category 1 is positively identified and neither Category 2 nor Category 3 is detected:
+    \begin{equation}
+    \text{Status} = \text{Intact} \iff (D_1 = 1) \land (D_2 = 0) \land (D_3 = 0)
+    \end{equation}
+\end{enumerate}
+
+Assuming the error probabilities of the macro-scale detector ($P(\text{Miss}_{\text{Cat2}})$) and micro-scale detector ($P(\text{Miss}_{\text{Cat3}})$) are statistically independent, the compound miss probability under dual verification is:
+\begin{equation}
+P(\text{Miss}_{\text{Compound}}) = P(\text{Miss}_{\text{Cat2}}) \times P(\text{Miss}_{\text{Cat3}})
+\end{equation}
+Because both individual miss rates are fractional values, their mathematical product reduces defect escape rates by an order of magnitude.
+
+\section{Offline Model Training and Online Inference Framework}
+
+The end-to-end technical pipeline bridges offline deep model training with high-speed online conveyor sorting. Figure~\ref{fig:training_schematic} illustrates the offline training and online deployment workflow.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.78\textwidth]{figure6_training_schematic.jpg}
-    \caption{Flowchart of data acquisition, model training, validation and factory deployment}
+    \includegraphics[width=0.95\textwidth]{figure6_training_schematic.jpg}
+    \caption{Comprehensive technical workflow spanning offline training, model export and online inference}
     \label{fig:training_schematic}
 \end{figure}
 
-Training was conducted on an Intel Core i5-10400F CPU (2.9 GHz) with an NVIDIA GeForce RTX 3060 GPU (12 GB VRAM) and 32 GB RAM under Windows 10, Python 3.8 and PyTorch 1.13.1. Training parameters: input size $640 \times 640$, batch size 16, SGD optimizer (momentum 0.937, weight decay 0.0005), initial learning rate 0.01, random seed 42 and exactly 300 epochs trained from scratch without pre-trained weights.
-%=========================================================
-% CHAPTER 5
-%=========================================================
+During offline training, unwashed egg images are augmented and fed into the improved YOLOv8 model for 300 epochs. Gradients are computed via backpropagation across the multi-task loss function combining WIoUv2 bounding box regression and BCE classification loss. The trained model weights are exported and optimized for inference using TensorRT.
 
-\chapter{Results and Discussion}
+During online operation, the industrial camera captures live conveyor frames at 45 FPS. The Python inference engine executes bounding box prediction, applies non-maximum suppression (NMS) and evaluates dual verification logic to transmit sorting commands to downstream pneumatic sorting actuators.
 
-\section{Experimental Setup and Evaluation Metrics}
+\section{Experimental Setup and Hyperparameter Configuration}
 
-The computational environment and hyperparameters utilized for offline training and evaluation are summarized in Table~\ref{tab:hardware_software}.
+The computational environment and hyperparameters utilized for offline model training and comparative evaluation are summarized in Table~\ref{tab:hardware_software}.
 
 \begin{table}[H]
 \centering
@@ -817,34 +841,49 @@ The computational environment and hyperparameters utilized for offline training 
 \setlength{\tabcolsep}{8pt}
 \renewcommand{\arraystretch}{1.15}
 \small
-\begin{tabular}{ll}
-\toprule
+\begin{tabular}{|l|l|}
+\hline
 \textbf{Component / Parameter} & \textbf{Specification / Value} \\
-\midrule
+\hline
 Operating System & Microsoft Windows 10 (64-bit) \\
+\hline
 Central Processing Unit (CPU) & Intel Core i5-10400F @ 2.90 GHz \\
+\hline
 Graphics Processing Unit (GPU) & NVIDIA GeForce RTX 3060 (12 GB VRAM) \\
+\hline
 System Memory (RAM) & 32 GB DDR4 (3200 MHz) \\
+\hline
 Framework and Language & PyTorch 1.13.1, CUDA 11.6, Python 3.8 \\
+\hline
 Image Resolution & $640 \times 640$ pixels \\
+\hline
 Training Epochs and Batch Size & 300 epochs, batch size 16 \\
+\hline
 Optimizer and Initial LR & SGD (momentum: 0.937), initial lr: 0.01 \\
-\bottomrule
+\hline
 \end{tabular}
 \end{table}
 
-Standard evaluation metrics are defined as follows:
+\section{Quantitative Evaluation Metrics}
+
+Model detection performance is quantitatively evaluated using standard computer vision metrics: Precision, Recall, Mean Average Precision at IoU threshold 0.5 (mAP@0.5), False Negative Rate (FNR), False Positive Rate (FPR) and Frames Per Second (FPS):
 \begin{equation}
 \text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}, \quad \text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}
 \end{equation}
 \begin{equation}
 \text{mAP@0.5} = \frac{1}{N_c} \sum_{i=1}^{N_c} \text{AP}_i, \quad \text{FNR} = \frac{\text{FN}}{\text{TP} + \text{FN}}, \quad \text{FPR} = \frac{\text{FP}}{\text{FP} + \text{TN}}
 \end{equation}
-where TP, FP, TN and FN denote true positives, false positives, true negatives and false negatives respectively and FPS measures frames processed per second.
+where TP, FP, TN and FN denote true positives, false positives, true negatives and false negatives respectively, $N_c = 3$ is the number of target categories and $\text{AP}_i$ represents the area under the Precision-Recall curve for category $i$.
 
-\section{Ablation Study and Analysis of Proposed Modules}
+%=========================================================
+% CHAPTER 3: RESULTS AND ANALYSIS
+%=========================================================
 
-To quantify the individual contributions of DCNv2, BiFPN, WIoU and the P2 small target detection head, eight ablation variants were evaluated. Table~\ref{tab:ablation_results} reports test dataset performance.
+\chapter{Results and Analysis}
+
+\section{Ablation Study: Impact of Proposed Structural Components}
+
+To quantify the individual and synergistic contributions of DCNv2, BiFPN, WIoUv2 and the P2 small target detection head, eight systematic ablation experiments were conducted on the unwashed egg test dataset under identical training protocols. Table~\ref{tab:ablation_results} presents the ablation results across all eight model configurations.
 
 \begin{table}[H]
 \centering
@@ -854,32 +893,39 @@ To quantify the individual contributions of DCNv2, BiFPN, WIoU and the P2 small 
 \setlength{\tabcolsep}{6pt}
 \renewcommand{\arraystretch}{1.15}
 \small
-\begin{tabular}{cccc|ccc}
-\toprule
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
 \textbf{DCNv2} & \textbf{BiFPN} & \textbf{WIoU} & \textbf{Small Target Head} & \textbf{Precision (\%)} & \textbf{Recall (\%)} & \textbf{mAP@0.5 (\%)} \\
-\midrule
+\hline
 - & - & - & - & 92.2 & 85.3 & 87.7 \\
+\hline
 - & - & \checkmark & - & 90.6 & 87.4 & 90.3 \\
+\hline
 - & \checkmark & - & - & 89.8 & 83.8 & 88.2 \\
+\hline
 - & - & - & \checkmark & 93.8 & 90.3 & 93.0 \\
+\hline
 \checkmark & - & \checkmark & - & 93.1 & 89.4 & 92.1 \\
+\hline
 - & \checkmark & \checkmark & - & 92.6 & 89.5 & 92.2 \\
+\hline
 \checkmark & \checkmark & \checkmark & - & 93.8 & 89.9 & 92.6 \\
+\hline
 \checkmark & \checkmark & \checkmark & \checkmark & \textbf{94.1} & \textbf{90.0} & \textbf{92.9} \\
-\bottomrule
+\hline
 \end{tabular}
 \end{table}
 
-Key observations from the ablation study:
+Key analytical findings from the ablation evaluations:
 \begin{enumerate}[label=\arabic*.]
-    \item Replacing CIoU with WIoU boosted mAP from 87.7\% to 90.3\% (+2.6\%), demonstrating the value of dynamic gradient weighting.
-    \item The P2 small target head yielded the largest single-module improvement (+5.3\% mAP), preserving high-frequency micro-crack edges.
-    \item The full four-component ensemble achieved the highest precision (94.1\%) and balanced recall (90.0\%) with 92.9\% mAP (+5.2\% over baseline), proving that DCNv2 and BiFPN provide crucial robustness against irregular crack shapes and illumination variations.
+    \item \textbf{Impact of WIoUv2 Dynamic Loss:} Replacing the default CIoU loss with WIoUv2 increased mAP@0.5 from 87.7\% to 90.3\% (+2.6 percentage points), demonstrating that dynamic gradient allocation effectively reduces the disruptive influence of extreme low-quality bounding box outliers.
+    \item \textbf{Impact of P2 Small Target Detection Head:} Introducing the P2 detection head yielded the single largest performance gain (+5.3\% mAP@0.5), boosting recall from 85.3\% to 90.3\%. Operating on high-resolution $160 \times 160$ feature maps preserves the faint edge gradients of micro-cracks that are lost in standard stride-32 downsampling.
+    \item \textbf{Synergy of DCNv2 and BiFPN:} Adding DCNv2 and BiFPN alongside WIoUv2 and the P2 head produced the most balanced overall performance, achieving 94.1\% precision, 90.0\% recall and 92.9\% mAP@0.5 (+5.2\% improvement over baseline YOLOv8). DCNv2 dynamically conforms receptive fields to winding crack trajectories, while BiFPN ensures robust cross-scale feature fusion across varying lighting angles.
 \end{enumerate}
 
-\section{Model Complexity and Benchmark Comparison}
+\section{Model Complexity and Computational Overhead Analysis}
 
-Table~\ref{tab:model_complexity} compares model complexity between baseline YOLOv8 and the improved model. The structural enhancements introduce only +2.7\% parameters, +9.3\% FLOPs and +1.5 MB in model size.
+Table~\ref{tab:model_complexity} presents a comparative analysis of model complexity and computational footprint between baseline YOLOv8 and the proposed improved YOLOv8 framework.
 
 \begin{table}[H]
 \centering
@@ -889,19 +935,24 @@ Table~\ref{tab:model_complexity} compares model complexity between baseline YOLO
 \setlength{\tabcolsep}{10pt}
 \renewcommand{\arraystretch}{1.15}
 \small
-\begin{tabular}{lccc}
-\toprule
+\begin{tabular}{|l|c|c|c|}
+\hline
 \textbf{Model Architecture} & \textbf{Parameters} & \textbf{FLOPs (G)} & \textbf{Model Size (MB)} \\
-\midrule
+\hline
 Baseline YOLOv8 & $2.59 \times 10^7$ & 79.1 & 49.6 \\
+\hline
 Proposed Improved YOLOv8 & $2.66 \times 10^7$ & 86.5 & 51.1 \\
-\midrule
+\hline
 \textbf{Relative Increase} & \textbf{+2.7\%} & \textbf{+9.3\%} & \textbf{+3.0\%} \\
-\bottomrule
+\hline
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:benchmark_comparison} compares the proposed model against mainstream detectors on the unwashed egg dataset. The proposed model outperforms Faster R-CNN by 14.8\% mAP, YOLOv5 by 7.7\% mAP, baseline YOLOv8 by 5.2\% mAP and YOLOv11 by 5.6\% mAP. At 45 FPS, its throughput comfortably satisfies the $\ge 30$ FPS industrial standard.
+The structural enhancements introduce minimal computational overhead: model parameters increase by only 2.7\% (from $2.59 \times 10^7$ to $2.66 \times 10^7$), floating-point operations increase by 9.3\% (from 79.1 G to 86.5 G FLOPs) and disk storage footprint increases by just 1.5 MB (from 49.6 MB to 51.1 MB). This modest complexity overhead makes the model well-suited for industrial edge deployment.
+
+\section{Comparative Performance Benchmark Against Mainstream Detectors}
+
+To establish comparative superiority, the proposed model was benchmarked against leading two-stage and single-stage object detectors on the identical unwashed egg test dataset. Table~\ref{tab:benchmark_comparison} summarizes performance metrics across all evaluated architectures.
 
 \begin{table}[H]
 \centering
@@ -911,47 +962,73 @@ Table~\ref{tab:benchmark_comparison} compares the proposed model against mainstr
 \setlength{\tabcolsep}{8pt}
 \renewcommand{\arraystretch}{1.15}
 \small
-\begin{tabular}{lcccc}
-\toprule
+\begin{tabular}{|l|c|c|c|c|}
+\hline
 \textbf{Object Detection Model} & \textbf{Precision (\%)} & \textbf{Recall (\%)} & \textbf{mAP@0.5 (\%)} & \textbf{Speed (FPS)} \\
-\midrule
+\hline
 Faster R-CNN (ResNet50) & 68.4 & 80.7 & 78.1 & 17 \\
+\hline
 YOLOv5 & 86.9 & 81.1 & 85.2 & 58 \\
+\hline
 YOLOv8 (Baseline) & 92.2 & 85.3 & 87.7 & 52 \\
+\hline
 YOLOv11 & 92.7 & 84.3 & 87.3 & 47 \\
+\hline
 \textbf{Proposed Improved YOLOv8} & \textbf{94.1} & \textbf{90.0} & \textbf{92.9} & \textbf{45} \\
-\bottomrule
+\hline
 \end{tabular}
 \end{table}
 
-\section{Precision-Recall Dynamics and Visual Results}
+The proposed model outperforms all competing architectures across precision, recall and mAP@0.5:
+\begin{itemize}
+    \item Faster R-CNN achieves only 78.1\% mAP@0.5 and operates at 17 FPS, failing industrial speed thresholds ($\ge 30$ FPS).
+    \item YOLOv5 achieves 85.2\% mAP@0.5, suffering from missed detections on fine hairline fissures.
+    \item YOLOv11 achieves 87.3\% mAP@0.5, performing comparably to baseline YOLOv8 (87.7\%) but lacking specialized receptive field adaptation.
+    \item The proposed model achieves 92.9\% mAP@0.5, outperforming baseline YOLOv8 by +5.2 percentage points and Faster R-CNN by +14.8 percentage points while operating at 45 FPS, comfortably exceeding the 30 FPS real-time conveyor sorting requirement.
+\end{itemize}
 
-Figure~\ref{fig:pr_curves} displays Precision-Recall curves before and after model improvement, showing expanded area under the curve across all three categories. Figure~\ref{fig:visual_detection} shows side-by-side visual detection comparisons: baseline YOLOv8 misses faint cracks and misclassifies surface dirt, whereas the improved model accurately localizes both the cracked egg body and tight damage regions.
+\section{Precision-Recall Dynamics and Defect-Specific Performance}
+
+Figure~\ref{fig:pr_curves} displays the Precision-Recall (PR) curves for baseline YOLOv8 and the proposed improved YOLOv8 across all three defect categories.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figure8_pr_curves_comparison.jpg}
-    \caption{Precision-Recall (P-R) curves before and after model improvement}
+    \includegraphics[width=0.95\textwidth]{figure8_pr_curves_comparison.jpg}
+    \caption{Precision-Recall curves comparison between baseline YOLOv8 and the proposed model across all target categories}
     \label{fig:pr_curves}
 \end{figure}
 
+The area under the PR curve expands substantially for the proposed model across all categories. The most pronounced expansion occurs in Category 3 (Crack Region), where the addition of the P2 small target head and DCNv2 enables sustained high precision even at high recall operating points.
+
+\section{Visual Detection Performance and Comparison}
+
+Figure~\ref{fig:visual_detection} provides visual detection comparisons between Faster R-CNN, YOLOv5, baseline YOLOv8 and the proposed improved model under challenging factory conditions.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.78\textwidth]{figure9_detection_effects_comparison.jpg}
-    \caption{Visual detection comparison on test frames: Left shows baseline YOLOv8, Right shows proposed improved YOLOv8}
+    \includegraphics[width=0.80\textwidth]{figure9_detection_effects_comparison.jpg}
+    \caption{Visual detection comparisons of Faster R-CNN, YOLOv5, baseline YOLOv8 and the proposed improved model on unwashed eggs}
     \label{fig:visual_detection}
 \end{figure}
 
-\section{Industrial Production Line Online Testing}
+In challenging scenarios featuring unwashed eggs with surface manure streaks and faint micro-cracks, Faster R-CNN and YOLOv5 frequently produce false positive detections on surface stains. Baseline YOLOv8 misses low-contrast hairline fissures. In contrast, the proposed improved YOLOv8 accurately identifies the holistic cracked egg boundary while tightly segmenting localized crack regions without being misled by non-defective surface contaminants.
 
-The system was deployed on the physical conveyor line at Guangzhou Suiping Enterprise Co., Ltd., as shown in Figure~\ref{fig:online_deployment}. Detection accuracy was benchmarked across 106 production video frames, with error rates presented in Table~\ref{tab:online_inspection_errors}.
+\section{Industrial Conveyor Online Dynamic Testing}
+
+To validate real-world operational efficacy, the trained model was deployed onto an active industrial egg conveyor grading system at Guangzhou Suiping Enterprise Co., Ltd. Figure~\ref{fig:online_deployment} illustrates the online production testing environment.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.72\textwidth]{figure7_online_deployment_testing_1.jpg}
+    \includegraphics[width=0.75\textwidth]{figure7_online_deployment_testing_1.jpg}
     \caption{Online deployment and testing on the industrial egg conveyor line}
     \label{fig:online_deployment}
 \end{figure}
+
+The online testing system operates across six parallel channels. Eggs translate forward while rotating axially over contoured rollers. An industrial camera records continuous video streams at 45 FPS and each individual egg is tracked across approximately 60 video frames during its passage through the imaging zone.
+
+\section{Online Inspection Accuracy and Dual Verification Validation}
+
+Table~\ref{tab:online_inspection_errors} summarizes online inspection error rates (False Negative Rate and False Positive Rate) evaluated across 106 continuous production video frames.
 
 \begin{table}[H]
 \centering
@@ -961,35 +1038,46 @@ The system was deployed on the physical conveyor line at Guangzhou Suiping Enter
 \setlength{\tabcolsep}{6pt}
 \renewcommand{\arraystretch}{1.2}
 \small
-\begin{tabular}{l|cc|cc}
-\toprule
-\textbf{Classification Category} & \multicolumn{2}{c|}{\textbf{Baseline YOLOv8}} & \multicolumn{2}{c}{\textbf{Proposed Improved YOLOv8}} \\
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Classification Category} & \multicolumn{2}{c|}{\textbf{Baseline YOLOv8}} & \multicolumn{2}{c|}{\textbf{Proposed Improved YOLOv8}} \\
+\cline{2-5}
 & \textbf{FNR (\%)} & \textbf{FPR (\%)} & \textbf{FNR (\%)} & \textbf{FPR (\%)} \\
-\midrule
+\hline
 Class 1: Intact Egg & 1.26 & 4.00 & \textbf{0.46} & \textbf{2.18} \\
+\hline
 Class 2: Cracked Egg & 10.17 & 3.20 & \textbf{5.52} & \textbf{1.16} \\
+\hline
 Class 3: Damaged Area & 22.97 & 0.87 & \textbf{19.19} & \textbf{0.58} \\
-\midrule
-\textbf{Compound Dual Verification FNR} & \multicolumn{2}{c|}{$10.17\% \times 22.97\% = 2.34\%$} & \multicolumn{2}{c}{$\mathbf{5.52\% \times 19.19\% = 1.06\%}$} \\
-\bottomrule
+\hline
+\textbf{Compound Dual Verification FNR} & \multicolumn{2}{c|}{$10.17\% \times 22.97\% = 2.34\%$} & \multicolumn{2}{c|}{$\mathbf{5.52\% \times 19.19\% = 1.06\%}$} \\
+\hline
 \end{tabular}
 \end{table}
 
-Key factory findings:
-\begin{itemize}
-    \item Intact egg false alarm rate (FPR) dropped from 4.00\% to 2.18\%, saving marketable eggs.
-    \item Cracked egg miss rate (FNR) was reduced by nearly half from 10.17\% to 5.52\%.
-    \item Compound broken egg miss rate fell to just 1.06\%, ensuring industrial reliability.
-\end{itemize}
+Key findings from industrial online testing:
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Intact Egg False Alarm Reduction:} The false alarm rate (FPR) for intact eggs dropped from 4.00\% to 2.18\%, saving 1.82\% of healthy eggs from erroneous discard.
+    \item \textbf{Individual Category Sensitivity:} For cracked eggs (Category 2), the miss rate (FNR) was cut nearly in half from 10.17\% to 5.52\%, while the false positive rate decreased from 3.20\% to 1.16\%.
+    \item \textbf{Compound Miss Rate under Dual Verification:} Under dual verification logic, an egg escapes detection only if both Category 2 and Category 3 miss simultaneously. The compound miss rate was driven down to just:
+    \begin{equation}
+    5.52\% \times 19.19\% = 1.06\%
+    \end{equation}
+    representing an absolute error reduction of 4.65\% over single-detector setups and satisfying industrial grading criteria.
+\end{enumerate}
 
-Figure~\ref{fig:production_detection} shows live conveyor tracking with rotating eggs and Figure~\ref{fig:online_speed} confirms consistent inference speed hovering stably at 45 FPS across 400 continuous frames.
+Figure~\ref{fig:production_detection} displays visual detection outputs on the active multi-channel conveyor bed during online operation.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.78\textwidth]{figure10_production_line_detection.jpg}
+    \includegraphics[width=0.80\textwidth]{figure10_production_line_detection.jpg}
     \caption{Visual detection results on active industrial conveyor with rotating eggs}
     \label{fig:production_detection}
 \end{figure}
+
+\section{Real-Time Processing Speed and Temporal Stability}
+
+Figure~\ref{fig:online_speed} plots the frame-by-frame inference speed across 400 continuous video frames during factory online testing.
 
 \begin{figure}[H]
     \centering
@@ -998,69 +1086,69 @@ Figure~\ref{fig:production_detection} shows live conveyor tracking with rotating
     \label{fig:online_speed}
 \end{figure}
 
-\section{Discussion of Operational Findings and Edge Cases}
+The inference latency remains exceptionally stable, hovering tightly around 45 FPS throughout continuous operation. Although slightly lower than baseline YOLOv8 (52 FPS) due to the addition of DCNv2, BiFPN and the P2 head, 45 FPS far exceeds the required conveyor throughput rate of 30 FPS, leaving ample margin for online communication and mechanical sorting actuation.
 
-The slight speed reduction from 52 FPS to 45 FPS (-14.5\%) provided a +5.2\% mAP gain while maintaining comfortable real-time margin over the 30 FPS line rate. Combining DCNv2 with triple granularity decoupled true crack edges from manure and dust on unwashed eggs. While plain shells (white eggs and duck eggs) exhibited high contrast, fine reticular spider-web cracks (widths $< 0.03$ mm) remain the primary edge-case challenge under diffuse lighting.
 %=========================================================
-% CHAPTER 6
+% CHAPTER 4: DISCUSSION
 %=========================================================
 
-\chapter{Applications and Practical Implementation}
+\chapter{Discussion}
 
-\section{Industrial Egg Grading and Packaging Lines}
+\section{Speed Versus Accuracy Trade-Off in Industrial Grading}
 
-In commercial poultry packaging facilities processing 30,000 to 180,000 eggs per hour (e.g., Kyowa, Moba and Sanovo grading machines), the improved YOLOv8 vision system serves as an automated quality gateway installed prior to washing tanks. Detecting and ejecting cracked eggs before washing prevents wash water from being drawn into egg interiors via capillary suction, protecting sanitation and preventing batch-wide bacterial cross-contamination.
+In automated quality grading, system utility requires striking a delicate balance between inference latency and detection precision. A high-accuracy model with excessive inference latency creates production bottlenecks, whereas an ultra-fast model with lower accuracy permits defective products to enter commercial channels.
 
-\section{Real-Time Online Rejection Mechanisms}
+As demonstrated in Chapter 3, the proposed improvements introduced a modest reduction in raw frame rate from 52 FPS to 45 FPS (-13.5\%). However, this computational cost yielded a substantial +5.2 percentage point gain in mAP@0.5 (from 87.7\% to 92.9\%), reduced the intact egg false alarm rate from 4.00\% to 2.18\% and achieved a compound cracked egg miss rate of only 1.06\%. Because industrial conveyor lines operate at 360 eggs per minute across six channels (equivalent to approximately 30 frames per second video throughput), operating at 45 FPS provides a comfortable 50\% computational headroom. This trade-off, accepting a minor speed reduction to secure superior detection accuracy, is well-justified for commercial poultry packaging.
 
-The vision system interfaces with downstream programmable logic controllers (PLCs) through rotary encoder synchronization. Optical shaft encoders track the millimeter displacement of individual roller pockets. When a defect is detected, high-speed solenoid pneumatic air-jet valves discharge a calibrated compressed air pulse (under 20 ms) that lifts the defective egg into a collection chute, achieving reliable non-contact rejection at line speeds.
+\section{Adaptability to Natural Shell Surface Contaminants}
 
-\section{Embedded Edge Computing Deployment}
+A primary failure mode of conventional computer vision systems in poultry processing is sensitivity to surface dirt. Commercial eggs are frequently sorted prior to washing. In unwashed conditions, natural surface contaminants such as feather debris, dust flecks and dried manure streaks produce sharp optical contrast boundaries that trigger false positives in gradient-based edge detectors and standard convolutional networks.
 
-With a compact footprint of 51.1 MB and 86.5 G FLOPs, the improved model can be deployed on edge hardware such as the NVIDIA Jetson AGX Orin. Utilizing TensorRT FP16 quantization accelerates inference latency to under 12 milliseconds per frame, enabling direct installation within ruggedized factory control cabinets.
+The proposed architecture resolves this challenge through the collaborative action of DCNv2 and triple classification granularity. Deformable convolution dynamically reshapes receptive field sampling patterns along continuous curvilinear crack trajectories, effectively ignoring localized, irregular dirt blotches. Furthermore, by independently supervising Category 2 (holistic cracked egg) and Category 3 (localized crack region), the network learns to decouple structural fracture morphology from superficial dirt textures, reducing the false alarm rate on intact unwashed eggs to 2.18\%.
 
-\section{Environmental Maintenance and Operational Protocols}
+\section{Generalization Across Diverse Poultry Egg Varieties}
 
-Demanding poultry farm environments require active maintenance measures:
+In commercial production, eggshell appearance varies considerably across avian breeds and species. For eggs with uniform, solid-colored shells, such as brown hen eggs and white duck eggs, the proposed detection framework exhibits strong feature contrast. The visual indicators of shell rupture, consisting of abrupt color shifts, shadowed fracture lines and localized surface glossiness variations, provide prominent signals that the network readily identifies.
+
+Conversely, for eggs with heavily patterned or speckled shells, such as quail eggs, defect recognition presents dual characteristics. The intricate natural pigmentation of intact quail shells creates a complex, high-frequency background that increases the risk of false alarms. However, when structural fractures occur that involve underlying albumen or yolk leakage, the distinctive wet, highly reflective optical signature of the damaged area produces a strong, unmistakable feature response. Extending training datasets across cross-species egg varieties represents a promising avenue for universal poultry grading.
+
+\section{Technical Challenges with Reticular Micro-Cracks}
+
+Despite the strong performance achieved by the improved YOLOv8 model, fine reticular spider-web cracks remain the most challenging defect category. These micro-cracks exhibit aperture widths below 0.03 mm and lack pronounced structural displacement. Under standard top-down diffuse LED illumination, these hairline cracks cast virtually no geometric shadow, producing faint edge gradients that blend into the natural micro-texture of the calcite crystalline matrix.
+
+When reticular micro-cracks appear on unwashed eggs, their visual ambiguity increases further, occasionally leading to false negatives in individual video frames. Although multi-frame accumulation across the 60-frame inspection window partially compensates for weak single-frame responses, addressing this challenge at the source requires specialized optical engineering. Implementing dark-box illumination setups, where grazing-angle side lighting illuminates crack fissures via internal refraction while leaving the surrounding shell dark, presents an effective solution to enhance crack gradient contrast.
+
+\section{Edge Computing Deployment and Industrial Hardware Integration}
+
+Practical deployment within harsh poultry farm environments requires robust hardware integration and active environmental maintenance protocols:
 \begin{itemize}
-    \item \textbf{Positive-Pressure Air Knives:} Continuous laminar airflow over optical lens surfaces prevents airborne feather dust and moisture droplets from settling on glass apertures.
-    \item \textbf{LED Thermal Regulation:} Thermostatically controlled cooling fans prevent LED color temperature drift across seasonal shifts.
-    \item \textbf{Illumination Self-Calibration:} Periodic reference checks on empty white rollers automatically adjust camera exposure times to compensate for diode aging.
+    \item \textbf{Edge Computing Platform:} With a parameter count of $2.66 \times 10^7$ and a model file size of 51.1 MB, the improved network can be deployed onto embedded edge AI accelerators such as the NVIDIA Jetson AGX Orin. Applying TensorRT FP16 quantization accelerates inference latency to under 12 ms per frame.
+    \item \textbf{Pneumatic Sorting Actuation:} The machine vision software interfaces with downstream programmable logic controllers (PLCs) synchronized via optical rotary shaft encoders. When an egg is flagged as cracked, high-speed solenoid air valves trigger a calibrated 20 ms compressed air pulse, gently lifting the defective egg into an exit chute without mechanical impact damage.
+    \item \textbf{Environmental Protection:} Poultry sorting facilities carry heavy airborne dust and humidity. Installing positive-pressure air knives across optical camera windows prevents airborne feather dust from settling on lenses, while thermostatically regulated LED cooling fans prevent color temperature shifts during prolonged multi-shift operations.
 \end{itemize}
 
-\section{Economic Benefits and Food Safety Assurance}
-
-Deploying automated crack detection replaces two to four manual candling operators per shift, substantially lowering labor payrolls. Lowering the intact egg false alarm rate to 2.18\% preserves 1.82\% of marketable eggs, saving over 1,820 eggs daily in a 100,000 egg/day plant. Furthermore, reducing broken egg escapes to 1.06\% provides robust protection against \textit{Salmonella} outbreaks, protecting brand integrity and eliminating emergency shutdowns caused by leaking yolk fouling conveyor machinery.
 %=========================================================
-% CHAPTER 7
+% CHAPTER 5: CONCLUSION
 %=========================================================
 
-\chapter{Conclusion and Future Scope}
+\chapter{Conclusion}
 
 \section{Conclusion}
 
-This seminar presented a comprehensive investigation of an industrial-grade, real-time cracked egg detection system combining an improved YOLOv8 architecture, multi-channel rotational conveyance and dual verification with triple classification granularity.
+This seminar presented a comprehensive investigation of an industrial-grade, real-time cracked egg detection system combining an improved YOLOv8 deep learning architecture, multi-channel rotational conveyance and a redundant dual verification mechanism with triple classification granularity. The mechanical conveying assembly features six parallel inspection channels equipped with motor-driven rotating rollers, ensuring that each moving egg undergoes complete 360-degree axial rotation beneath an overhead industrial CCD camera and uniform LED illumination box, entirely eliminating circumferential inspection blind spots.
 
-The key achievements of the study are:
-\begin{enumerate}[label=\arabic*.]
-    \item A six-channel roller conveyor imparting synchronized translation and continuous axial rotation eliminated shell inspection blind spots.
-    \item Triple classification granularity (Intact Egg, Cracked Egg and Crack Region) provided multi-scale supervision, while redundant dual verification lowered compound miss rates to 1.06\%.
-    \item Architectural optimizations (DCNv2, BiFPN, P2 small target head and WIoUv2 loss) achieved an mAP@0.5 of 92.9\% and 94.1\% precision, outperforming Faster R-CNN, YOLOv5 and YOLOv11 with negligible overhead.
-    \item Live industrial deployment sustained 45 FPS across 400 frames, reducing intact egg false alarms to 2.18\% and satisfying factory grading criteria.
-\end{enumerate}
+To address the limitations of conventional binary classification and rigid convolutional kernels, the framework established a triple classification granularity paradigm comprising Intact Egg (Category 1), Cracked Egg (Category 2) and localized Crack Region (Category 3). At the architectural level, baseline YOLOv8 was structurally optimized by embedding Deformable Convolution v2 (DCNv2) into the backbone to adapt receptive field sampling grids to irregular crack contours, replacing the PANet neck with a Weighted Bidirectional Feature Pyramid Network (BiFPN) for adaptive multi-scale feature fusion, adding a dedicated P2 small target detection head operating on a $160 \times 160$ feature map to preserve high-frequency micro-crack edges and implementing the Wise-IoU v2 (WIoUv2) dynamic loss function to dynamically balance gradient penalties across bounding box candidates.
 
-\section{Practical Limitations}
-
-Current limitations include vulnerability to ultra-fine reticular spider-web cracks ($< 0.03$ mm) that produce minimal shadow relief under diffuse top-down lighting and restriction to exterior surface defects without internal candling for blood spots or yolk deterioration.
+Experimental evaluations conducted on an industrial dataset of 3,222 unwashed egg images demonstrated that the improved YOLOv8 network achieves a Mean Average Precision (mAP@0.5) of 92.9\%, representing a 5.2 percentage point improvement over baseline YOLOv8 and outperforming Faster R-CNN (78.1\%), YOLOv5 (85.2\%) and YOLOv11 (87.3\%). During live industrial deployment on an active egg conveyor line, the deployed system maintained a continuous processing throughput of 45 frames per second, reduced the intact egg false alarm rate to 2.18\% and achieved a compound cracked egg miss rate of only 1.06\% under dual verification logic, fully satisfying real-time commercial egg packaging criteria.
 
 \section{Future Scope}
 
-Future research directions include:
+Based on the research findings and operational insights of the base paper, future investigations will focus on four specific directions:
 \begin{enumerate}[label=\arabic*.]
-    \item \textbf{Dark-Field and Polarized Illumination:} Lateral grazing lighting to make hairline micro-cracks glow brightly against dark shell backgrounds.
-    \item \textbf{Multi-Modal Vision and Spectroscopy:} Integrating NIR transmission spectroscopy for simultaneous internal freshness and shell crack inspection.
-    \item \textbf{Super-Resolution Networks:} Deploying lightweight patch-level generative models to magnify subtle gradient fissures without high-cost camera upgrades.
-    \item \textbf{Cross-Species Generalization:} Extending datasets to speckled quail eggs and textured duck eggs for universal poultry grading.
+    \item \textbf{Feature Super-Resolution and Attention Magnification:} Exploring advanced small-object detection algorithms, including feature super-resolution networks and attention-guided patch magnification mechanisms, to specifically boost edge gradient sensitivity and further reduce false negative rates on sub-millimeter damaged areas.
+    \item \textbf{Expanded Multi-Variety Poultry Datasets:} Collecting and annotating extensive industrial datasets encompassing diverse mechanical damage patterns, severe impact fractures and different poultry egg varieties (including duck eggs and patterned quail eggs) to further validate and strengthen model generalization across diverse commercial packaging lines.
+    \item \textbf{Dark-Box Specialized Illumination Systems:} Developing and incorporating specialized dark-box illumination setups utilizing grazing-angle lateral lighting and optical polarization to enhance the visual edge contrast of fine net-like reticular cracks against healthy shell backgrounds.
+    \item \textbf{Unified Multi-Defect Inspection Frameworks:} Integrating the surface crack detection system into a broader, multi-modal poultry egg quality evaluation platform combining internal candling and near-infrared spectroscopy to achieve simultaneous, unified detection of internal defects such as scattered yolk, blood spots and bacterial spoilage alongside exterior shell cracks.
 \end{enumerate}
 
 %=========================================================
@@ -1068,6 +1156,7 @@ Future research directions include:
 %=========================================================
 
 \chapter*{References}
+\markboth{References}{}
 \addcontentsline{toc}{chapter}{References}
 
 \begin{enumerate}[label={[\arabic*]}]
